@@ -1,0 +1,13 @@
+# Provision a VM by launching a puppet agent (standalone)
+- module_path: "/tmp/puppet_recipes"
+- puppet_main_class: "ntp"
+- git_address: "https://intranet.grid5000.fr/git/environments-recipes.git"
+
+    # NEEEEEEEEED to be changed. Depending on how (nfs? git? scp (yerk)? mount?)
+    #- exec_in: echo "taking manifests from /mnt (dirty binded mount)"
+- import_modules:
+  - exec_in: mkdir -p $$module_path
+  - exec_in: git clone $$git_address $$module_path
+- run_puppet:
+  - exec_in: puppet apply --modulepath=$$module_path -e "include $$puppet_main_class"
+  - exec_in: false
