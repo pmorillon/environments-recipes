@@ -12,10 +12,10 @@ checkpoint: qcow2.yaml
 #== Global variables use by Kameleon engine and the steps
 global:
   setup_packages: >
-        extlinux initramfs-tools linux-image-amd64 
+        extlinux initramfs-tools linux-image-amd64
 bootstrap:
   - "@base"
-setup: 
+setup:
   - "@base"
   - setup_provisioner
   - provision_image
