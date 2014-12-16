@@ -6,7 +6,7 @@
 #
 #==============================================================================
 ---
-extend: ../../default/virtualbox/debian7.yaml
+extend: ../../kameleon/virtualbox/debian7.yaml
 # Enables qcow2 checkpoint
 checkpoint: virtualbox.yaml
 #== Global variables use by Kameleon engine and the steps
@@ -20,5 +20,9 @@ setup:
   - setup_provisioner
   - provision_image
 export:
-  - "@base"
+  - disable_checkpoint
+  - virtualbox_save_appliance:
+    - output: "$$kameleon_cwd/$${kameleon_recipe_name}"
+    - save_as_qcow2
+    - save_as_tar_gz
 

@@ -1,6 +1,6 @@
 # /root/kameleon_workdir/modules/ntp/init.pp
 
-    class ntp {
+    class min {
       case $operatingsystem {
         centos, redhat: {
           $service_name = 'ntpd'
@@ -19,7 +19,7 @@
         path    => '/etc/ntp.conf',
         ensure  => file,
         require => Package['ntp'],
-        source  => "puppet:///modules/ntp/ntp.conf"
+        source  => "puppet:///modules/min/ntp.conf"
       }
       service { 'ntp':
         name      => $service_name,

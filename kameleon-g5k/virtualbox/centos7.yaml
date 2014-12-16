@@ -1,0 +1,28 @@
+#==============================================================================
+# vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
+#==============================================================================
+#
+# DESCRIPTION: Debian 7 (Wheezy) appliance built with chroot and qemu-nbd.
+#
+#==============================================================================
+---
+extend: ../../default/kameleon/centos7.yaml
+# Enables qcow2 checkpoint
+checkpoint: virtualbox.yaml
+#== Global variables use by Kameleon engine and the steps
+global:
+  setup_packages: >
+        syslinux-extlinux dracut kernel-devel ntp
+bootstrap:
+  - "@base"
+setup:
+  - "@base"
+  - setup_provisioner
+  - provision_image
+export:
+  - disable_checkpoint
+  - virtualbox_save_appliance:
+    - output: "$$kameleon_cwd/$${kameleon_recipe_name}"
+    - save_as_qcow2
+    - save_as_tar_gz
+

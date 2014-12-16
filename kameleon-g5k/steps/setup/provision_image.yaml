@@ -1,13 +1,16 @@
 # Provision a VM by launching a puppet agent (standalone)
 - module_path: "/tmp/puppet_recipes"
-- puppet_main_class: "ntp"
 
-    # NEEEEEEEEED to be changed. Depending on how (nfs? git? scp (yerk)? mount?)
-    #- exec_in: echo "taking manifests from /mnt (dirty binded mount)"
 - import_modules:
   - exec_in: mkdir -p $$module_path
   - pipe:
     - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data .
     - exec_in: tar xfp - -C $$module_path
 - run_puppet:
-  - exec_in: puppet apply --modulepath=$$module_path -e "include $$puppet_main_class"
+  - exec_in: |
+      if [ -z "$$flavor" ]; then
+        FLAVOR=prod
+      else
+        FLAVOR=$$flavor
+      fi
+  - exec_in: puppet apply --modulepath=$$module_path -e "include $FLAVOR"
