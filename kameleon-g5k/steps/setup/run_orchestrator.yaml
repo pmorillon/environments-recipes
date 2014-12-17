@@ -4,7 +4,7 @@
 - import_modules:
   - exec_in: mkdir -p $$module_path
   - pipe:
-    - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data .
+    - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data/puppet .
     - exec_in: tar xfp - -C $$module_path
 - run_puppet:
   - exec_in: |
