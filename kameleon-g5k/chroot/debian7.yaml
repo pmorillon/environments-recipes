@@ -17,8 +17,8 @@ bootstrap:
   - "@base"
 setup:
   - "@base"
-  - setup_provisioner
-  - provision_image
+  - setup_orchestrator
+  - run_orchestrator
 export:
   - "@base"
 

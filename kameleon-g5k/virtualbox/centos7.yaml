@@ -6,7 +6,7 @@
 #
 #==============================================================================
 ---
-extend: ../../default/kameleon/centos7.yaml
+extend: ../../kameleon/virtualbox/centos7.yaml
 # Enables qcow2 checkpoint
 checkpoint: virtualbox.yaml
 #== Global variables use by Kameleon engine and the steps
@@ -17,8 +17,8 @@ bootstrap:
   - "@base"
 setup:
   - "@base"
-  - setup_provisioner
-  - provision_image
+  - setup_orchestrator
+  - run_orchestrator
 export:
   - disable_checkpoint
   - virtualbox_save_appliance:
