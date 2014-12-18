@@ -69,6 +69,10 @@ global:
     psmisc acpid acpi-support-base openssh-server sysvinit man-db
     net-tools
 
+  setup_packages: >
+        debian-keyring sudo less vim bash-completion curl less bzip2 wget
+        dialog tree extlinux
+
 #== Bootstrap the new system and create the 'in_context'
 bootstrap:
   - enable_checkpoint
@@ -95,9 +99,7 @@ setup:
   - upgrade_system:
     - dist_upgrade: true
   - install_software:
-    - packages: >
-        debian-keyring sudo less vim bash-completion curl less bzip2 wget
-        dialog tree extlinux
+    - packages: $$setup_packages
   - install_bootloader
   # Configuration
   - configure_system:
