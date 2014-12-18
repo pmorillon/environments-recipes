@@ -11,14 +11,29 @@ extend: ../../kameleon/virtualbox/debian7.yaml
 checkpoint: virtualbox.yaml
 #== Global variables use by Kameleon engine and the steps
 global:
+  bootstrap_packages: >
+    linux-image-$$kernel_arch
+    isc-dhcp-client ifupdown iptables iproute
+    openssh-server
   setup_packages: >
-        extlinux initramfs-tools linux-image-amd64
+    extlinux
+
 bootstrap:
   - "@base"
+
 setup:
-  - "@base"
+  - configure_apt:
+    - repository: $$apt_repository
+    - enable_contrib_repo: $$apt_enable_contrib
+    - enable_nonfree_repo: $$apt_enable_nonfree
+  - upgrade_system:
+    - dist_upgrade: true
+  - install_software:
+    - packages: $$setup_packages
+  - install_bootloader
   - setup_orchestrator
   - run_orchestrator
+
 export:
   - disable_checkpoint
   - virtualbox_save_appliance:
