@@ -16,7 +16,6 @@ global:
     isc-dhcp-client ifupdown iptables iproute
     openssh-server
   setup_packages: >
-    extlinux
 
 bootstrap:
   - "@base"
@@ -30,7 +29,6 @@ setup:
     - dist_upgrade: true
   - install_software:
     - packages: $$setup_packages
-  - install_bootloader
   - setup_orchestrator
   - run_orchestrator
 
