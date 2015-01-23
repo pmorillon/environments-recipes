@@ -1,0 +1,34 @@
+
+<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::min::variant') %>-<%= scope.lookupvar('env::min::version') %> (Image based on Debian <%= @lsbdistcodename %> for AMD64/EM64T)
+  Maintained by support-staff <support-staff@lists.grid5000.fr>
+
+<% case scope.lookupvar('env::min::variant')
+       when "min" -%>
+  This is a minimal version of <%= @lsbdistcodename %> reference image.
+
+    <% end -%>
+Applications
+<% case scope.lookupvar('env::min::variant')
+       when "big" -%>
+  * Text: Vim, JED, nano, Emacs, JOE
+    <% else -%>
+  * Text: Vim, nano
+    <% end -%>
+<% case scope.lookupvar('env::min::variant')
+       when "base","big","nfs","xen" -%>
+  * Script: Perl, Python, Ruby
+    <% end -%>
+  (Type "dpkg -l" to see complete installed package list)
+<% case scope.lookupvar('env::min::variant')
+       when "base","big","nfs","xen" -%>
+
+Misc
+  * SSH has X11 forwarding enabled
+  * Max open files: 65536
+    <% else -%>
+
+  Grid'5000 tune of network buffer sizes, file descriptors, sshd MaxStartups and TCP cubic:
+  wget -O - http://git.grid5000.fr/g5k-tunings/tune.sh | bash
+    <% end -%>
+
+More details: https://www.grid5000.fr/mediawiki/index.php/<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::min::variant') %>-<%= scope.lookupvar('env::min::version') %>
