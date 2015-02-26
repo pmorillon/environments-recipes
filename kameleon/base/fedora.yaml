@@ -6,9 +6,15 @@
 #
 #==============================================================================
 ---
-# Loads some helpful aliases
+# Loads some helpful aliases (this files are located in steps/aliases/ directory)
 aliases: defaults.yaml
-#== Global variables use by Kameleon engine and the steps
+
+# Custom shell environement (this files are located in steps/env/ directory)
+env:
+  - bashrc
+  - functions.sh
+
+# Global variables use by Kameleon engine and the steps
 global:
   ## User varibales : used by the recipe
   user_name: kameleon
@@ -29,28 +35,22 @@ global:
   selinux: permissive  ## Can take one of these three values: enforcing, permissive or disabled
   selinuxtype: targeted  # Possible values are: strict, targeted
 
-  bootstrap_packages: >
-    findutils yum util-linux dhclient vim-minimal net-tools NetworkManager
-    openssh-server
-
-#== Bootstrap the new system and create the 'in_context'
+# Bootstrap the new system and create the 'in_context'
 bootstrap:
   - yum_bootstrap:
     - mirror_packages_url: http://mirrors.kernel.org/fedora/releases/$$release/Fedora/$$arch/os/Packages/f/
-    - include_pkgs: $$bootstrap_packages
+    - include_pkgs: yum $$bootstrap_packages
   - init_pxeboot:
     - pxe_initrd_url: http://mirrors.kernel.org/fedora/releases/$$release/Fedora/$$arch/os/images/pxeboot/initrd.img
     - pxe_vmlinuz_url: http://mirrors.kernel.org/fedora/releases/$$release/Fedora/$$arch/os/images/pxeboot/vmlinuz
 
-#== Install and configuration steps
+# Install and configuration steps
 setup:
   - configure_kernel
   - update_system
   - minimal_install
   - install_software:
-    - packages: >
-        kernel bash-completion kbd sudo openssh-clients syslinux-extlinux acpid
-        ntp ntpdate
+    - packages: kernel $$setup_packages
   - install_bootloader
   - configure_system:
     - locales: POSIX C en_US fr_FR de_DE
@@ -60,6 +60,7 @@ setup:
     - layout: "us"
   - configure_network:
     - hostname: kameleon-$$distrib
+  - kameleon_customization
   - create_user:
     - name: $$user_name
     - groups: wheel

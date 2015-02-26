@@ -1,18 +1,7 @@
 # Install and configure (if required) puppet
 # This is not made by the standard packet installation mechanisme
-# because we want to add a clean step
+# because we want to add a specific version
 
-# - pkgmgr: apt-get
-# - pkgmgr_yes: -y --force-yes
-# - pkgmgr_install: install
-# - pkgmgr_deinstall: autoremove
-# - pkgmgr_purge: --purge
-# - provisioning_packages: 'puppet'
-#
-# - setup_standalone_puppet:
-#   - exec_in: $$pkgmgr $$pkgmgr_yes $$pkgmgr_install $$provisioning_packages
-#   - on_setup_clean:
-#     - exec_in: $$pkgmgr $$pkgmgr_yes $$pkgmgr_purge $$pkgmgr_deinstall $$provisioning_packages
 
 - script_url: https://raw.githubusercontent.com/pmorillon/puppet-puppet/master/extras/bootstrap/puppet_install.sh
 - script_name: puppet_install.sh
