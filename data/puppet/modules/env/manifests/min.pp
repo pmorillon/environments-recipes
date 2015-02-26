@@ -24,8 +24,6 @@ class env::min ( $image_variant = 'min', $image_version = '0' ){
   include 'env::min::packages'
   # system
   include 'env::min::udev'
-  # Kexec
-  include 'env::min::kexec'
   # ssh
   include 'env::min::ssh'
   # setup
@@ -41,13 +39,4 @@ class env::min ( $image_variant = 'min', $image_version = '0' ){
   # kernel installation
   include 'env::min::kernel'
 
-
-  stage { 'cleanup': }
-  Stage['main'] -> Stage['cleanup']
-
-  #include 'env::min::packages_cleanup'
-  class {
-    'env::min::packages_cleanup':
-      stage  => 'cleanup';
-  }
 }

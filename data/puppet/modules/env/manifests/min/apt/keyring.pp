@@ -1,9 +1,10 @@
 class env::min::apt::keyring {
 
+  $operatingsystem_downcase = inline_template('<%= @operatingsystem.downcase %>')
   package {
-    "${operatingsystem}-keyring":
+    "${operatingsystem_downcase}-keyring":
       ensure => installed;
-    "${operatingsystem}-archive-keyring":
+    "${operatingsystem_downcase}-archive-keyring":
       ensure => installed;
   }
 
