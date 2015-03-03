@@ -1,25 +1,25 @@
 
-<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::min::variant') %>-<%= scope.lookupvar('env::min::version') %> (Image based on Debian <%= @lsbdistcodename %> for AMD64/EM64T)
+<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::variant') %>-<%= scope.lookupvar('env::version') %> (Image based on Debian <%= @lsbdistcodename %> for AMD64/EM64T)
   Maintained by support-staff <support-staff@lists.grid5000.fr>
 
-<% case scope.lookupvar('env::min::variant')
+<% case scope.lookupvar('env::variant')
        when "min" -%>
   This is a minimal version of <%= @lsbdistcodename %> reference image.
 
     <% end -%>
 Applications
-<% case scope.lookupvar('env::min::variant')
+<% case scope.lookupvar('env::variant')
        when "big" -%>
   * Text: Vim, JED, nano, Emacs, JOE
     <% else -%>
   * Text: Vim, nano
     <% end -%>
-<% case scope.lookupvar('env::min::variant')
+<% case scope.lookupvar('env::variant')
        when "base","big","nfs","xen" -%>
   * Script: Perl, Python, Ruby
     <% end -%>
   (Type "dpkg -l" to see complete installed package list)
-<% case scope.lookupvar('env::min::variant')
+<% case scope.lookupvar('env::variant')
        when "base","big","nfs","xen" -%>
 
 Misc
@@ -31,4 +31,4 @@ Misc
   wget -O - http://git.grid5000.fr/g5k-tunings/tune.sh | bash
     <% end -%>
 
-More details: https://www.grid5000.fr/mediawiki/index.php/<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::min::variant') %>-<%= scope.lookupvar('env::min::version') %>
+More details: https://www.grid5000.fr/mediawiki/index.php/<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::variant') %>-<%= scope.lookupvar('env::version') %>

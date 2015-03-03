@@ -1,11 +1,6 @@
 # This file contains the 'min' class used to configure an environment with minimal modification to be executed in grid'5000.
 
-class env::min ( $image_variant = 'min', $image_version = '0' ){
-
-  # Parameter defined here are build-specific. They do not belong to hiera (not platform specific).
-  # They take default value from min class. But they can be overloaded by upper scope class that include this one
-  $variant=$image_variant # bit, base, nfs, prod, big
-  $version=$image_version # Build version
+class env::min (){
 
   # Package manager
   case $operatingsystem {
