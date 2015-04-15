@@ -2,3 +2,4 @@
 .ruby-gemset
 *.swp
 build
+data/hiera/hieradata/

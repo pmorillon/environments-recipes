@@ -16,11 +16,11 @@ class env ($given_variant){
 
   case $variant {
     'min' :  { include env::min }
-#   'base':  { include env::base }
-#   'nfs' :  { include env::nfs }
-#   'prod':  { include env::prod }
-#   'big' :  { include env::big }
-#   'xen' :  { include env::xen }
+    'base':  { include env::base }
+    'nfs' :  { include env::nfs }
+    'prod':  { include env::prod }
+    'big' :  { include env::big }
+    'xen' :  { include env::xen }
     default: { notify {"flavor $variant is not implemented":}}
   }
 }
