@@ -15,7 +15,7 @@ class env::min (){
     }
   }
 
-  # Editors
+  # User package
   include 'env::min::packages'
   # system
   include 'env::min::udev'

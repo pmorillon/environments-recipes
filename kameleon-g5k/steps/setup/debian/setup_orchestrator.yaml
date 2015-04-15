@@ -20,7 +20,8 @@
   - exec_in: PUPPET_VERSION=$$puppet_version $$script_path/$$script_name
   # We tagged packet as "automatically installed" to auto-remove them at the end of the orchestration step
   # ruby-json is a bugfix. Even if it is a puppet dependency, apt mark it as "manually installed" for some unknown reason. As we don't want to keep it, we mark it as auto-installed.
-  - exec_in: apt-mark auto puppet puppet-common lsb-release puppetlabs-release ruby-json
+  # libaugeas-ruby: same than above
+  - exec_in: apt-mark auto puppet puppet-common lsb-release puppetlabs-release ruby-json libaugeas-ruby
   - on_setup_clean:
     - exec_in: apt-get --yes autoremove --purge
     - exec_local: rm -r $$kameleon_cwd/script_dir

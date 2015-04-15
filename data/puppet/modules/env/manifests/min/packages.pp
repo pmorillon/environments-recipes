@@ -1,6 +1,5 @@
-class env::min::packages ($architecture = 'amd64') {
+class env::min::packages () {
 
-  # Some packages to add
   $editors = [ 'vim', 'nano' ]
   $utils = [ 'less' ]
 

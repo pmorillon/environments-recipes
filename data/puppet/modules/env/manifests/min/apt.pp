@@ -6,8 +6,10 @@ class env::min::apt {
 
   # Proxy
   #
-  if $target_g5k {
-    include 'env::min::apt::proxy'
+  if $env::target_g5k {
+    class { 'env::min::apt::proxy':
+      stage  => 'g5k_adjustment';
+    }
   }
 
 }
