@@ -26,5 +26,7 @@ class env::base (){
   include 'env::base::mx'
   # Openmpi
   include 'env::base::openmpi'
+  # misc
+  include 'env::base::misc'
 
 }
