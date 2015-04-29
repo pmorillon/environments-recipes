@@ -23,48 +23,9 @@
   # libaugeas-ruby: same than above
   - exec_in: apt-mark auto puppet puppet-common lsb-release puppetlabs-release ruby-json libaugeas-ruby
   - on_setup_clean:
-    - exec_in: apt-get --yes autoremove --purge
+    # TODO: use tee to show purge logs?
+    - exec_in: apt-get --yes autoremove --purge | tee /tmp/temp_purge
+    - exec_in: grep -q "Removing puppet (3.7.3-1puppetlabs1)" /tmp/temp_purge && rm -rvf /var/lib/puppet
+    # TODO: don't install puppet.pref with pascal script or ensure it does not prevent puppet from upgrading if reinstalled by user
+    - exec_in: grep -q "Removing puppet (3.7.3-1puppetlabs1)" /tmp/temp_purge && rm -rvf /etc/apt/preferences.d/puppet.pref
     - exec_local: rm -r $$kameleon_cwd/script_dir
-
-
-
-## Need btrfs filesystem
-
-# - rootfs_snapshot: /opt/puppet/rootfs_snapshot
-#
-# - check_packages_state:
-#   - exec_in: false
-#
-# - create_rootfs_snapshot:
-#   - check_cmd_in: btrfs
-#   - exec_in: mkdir -p $(dirname $$rootfs_snapshot)
-#   - exec_in: btrfs subvolume snapshot / $$rootfs_snapshot
-#   - on_setup_clean:
-#     - exec_in: btrfs subvolume delete $$rootfs_snapshot
-#     - exec_in: rm $(dirname $$rootfs_snapshot)/bin/puppet
-#     - exec_in: rmdir $(dirname $$rootfs_snapshot)
-#
-# - install_puppet:
-#   # Deactivate the check to make the cache system works after a while...
-#   - exec_in: chroot $$rootfs_snapshot apt-get -o Acquire::Check-Valid-Until=false -y --force-yes update 2>&1
-#   - exec_in: chroot $$rootfs_snapshot apt-get -y --force-yes install puppet 2>&1
-#
-# - create_puppet_wrapper:
-#   - write_in:
-#     - $(dirname $$rootfs_snapshot)/bin/puppet
-#     - |
-#       #!/bin/bash
-#       ROOTFS=$$rootfs_snapshot
-#       export LD_LIBRARY_PATH="\$(chroot \$ROOTFS ldconfig -v 2>&1 | grep : | grep -v '.real' | sed "s|^|\$ROOTFS|g" | paste -s -d '')"
-#       export PATH="\$ROOTFS/usr/bin:\$ROOTFS/bin:\$PATH"
-#       export GEM_PATH="\$(chroot \$ROOTFS gem env gempath | tr ':' '\n' | sed "s|^|\$ROOTFS|g" | paste -s -d '')"
-#       export GEM_HOME="\$(chroot \$ROOTFS gem env gemhome)"
-#       export RUBYLIB="\$(chroot \$ROOTFS ruby -e 'puts $:' | sed "s|^|\$ROOTFS|g" | paste -s -d ':')"
-#
-#       RUBY_EXECUTABLE=\${ROOTFS}/usr/bin/ruby
-#       PUPPET_LAUNCHER=\${ROOTFS}/usr/bin/puppet
-#
-#       # Call the actual Puppet bin with our arguments
-#       "\${RUBY_EXECUTABLE}" "\${PUPPET_LAUNCHER}" "\$@"
-#   - exec_in: chmod +x /opt/puppet/bin/puppet
-#   - exec_in: false
