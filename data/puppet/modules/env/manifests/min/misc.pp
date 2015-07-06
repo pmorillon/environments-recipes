@@ -1,11 +1,4 @@
-class env::min::misc {
-
-  if $target_g5k {
-    $root_pwd = hiera("env::min::misc::rootpwd")
-  }
-  else {
-    $root_pwd = '$1$qzZwnZXQ$Ak1xs7Oma6HUHw/xDJ8q91' # grid5000
-  }
+class env::min::misc ($root_pwd = '$1$qzZwnZXQ$Ak1xs7Oma6HUHw/xDJ8q91', $keep_tmp = false) {
 
   # Set root password
   user {
@@ -27,4 +20,14 @@ class env::min::misc {
       ensure => 'link',
       target => '/bin/bash',
   }
+
+  if $keep_tmp {
+    # Don't delete /tmp on reboot
+    file {
+      '/etc/tmpfiles.d/tmp.conf':
+        ensure => 'link',
+        target => '/dev/null';
+    }
+  }
+
 }
