@@ -4,10 +4,10 @@ class env::nfs::ceph::apt (
 
   $key = '17ED316D'
 
+  # TODO: move apt-refresh dans min/apt
   exec {
     'import_ceph_apt_key':
       command     => "/usr/bin/wget -q 'http://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc' -O- | apt-key add -",
-      environment => "http_proxy=http://proxy:3128",
       unless      => "/usr/bin/apt-key list | /bin/grep '${key}'";
     '/usr/bin/apt-get update':
       refreshonly => true;

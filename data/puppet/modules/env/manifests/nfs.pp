@@ -13,5 +13,9 @@ class env::nfs (){
   include 'env::nfs::ntp'
   # package (shells)
   include 'env::nfs::packages'
+  # ldap
+  include 'env::nfs::ldap'
+  # nfs
+  include 'env::nfs::nfs'
 
 }
