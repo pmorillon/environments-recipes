@@ -28,9 +28,13 @@ class env::big::packages () {
       require => Package['parallel'];
     '/etc/at.allow':
       ensure  => present,
+      owner   => root,
+      group   => root,
       require => Package['at'];
     '/etc/cron.allow':
       ensure  => present,
+      owner   => root,
+      group   => root,
       require => Package['cron'];
   }
 
@@ -39,7 +43,6 @@ class env::big::packages () {
       ensure   => installed;
     'rake':
       ensure   => installed,
-      provider => gem,
       require  => Package['ruby'];
     $gems:
       ensure   => installed,

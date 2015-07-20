@@ -1,14 +1,20 @@
 # This file contains the 'min' class used to configure an environment with minimal modification to be executed in grid'5000.
 
-class env::min (){
+class env::min ( $parent_parameters = {} ) {
+
+  $min_parameters = {
+    misc_root_pwd => '$1$qzZwnZXQ$Ak1xs7Oma6HUHw/xDJ8q91',
+    misc_keep_tmp => false,
+  }
+  $parameters = merge( $parent_parametels, $min_parameters )
 
   # Package manager
   case $operatingsystem {
     'Debian','Ubuntu': {
-      include 'env::min::apt'
+      class { 'env::min::apt': }
     }
     'Centos': {
-      include 'env::min::yum'
+      class { 'env::min::yum': }
     }
     default: {
       err "${operatingsystem} not suported."
@@ -16,22 +22,26 @@ class env::min (){
   }
 
   # User package
-  include 'env::min::packages'
+  class { 'env::min::packages': }
   # system
-  include 'env::min::udev'
+  class { 'env::min::udev': }
   # ssh
-  include 'env::min::ssh'
+  class { 'env::min::ssh': }
   # setup
-  include 'env::min::locales'
+  class { 'env::min::locales': }
   # motd
-  include 'env::min::motd'
+  class { 'env::min::motd': }
   # tgs-g5k
-  include 'env::min::tgz-g5k'
+  class { 'env::min::tgz_g5k': }
   # network configuration
-  include 'env::min::network'
+  class { 'env::min::network': }
   # misc (root password, localtime, default shell...)
-  include 'env::min::misc'
+  class {
+    'env::min::misc':
+      root_pwd => $parameters['misc_root_pwd'],
+      keep_tmp => $parameters['misc_keep_tmp'];
+  }
   # kernel installation
-  include 'env::min::kernel'
+  class { 'env::min::kernel': }
 
 }

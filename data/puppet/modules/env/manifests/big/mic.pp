@@ -1,22 +1,5 @@
 class env::big::mic ($enable = false) {
 
-  # This is a dirty workaround induced by this bug in puppet: https://projects.puppetlabs.com/issues/15718 or https://tickets.puppetlabs.com/browse/PUP-1263
-  # this is used later to automatically install a package with dpkg after a retrivial using wget. Looped on an array.
-  define my_package {
-    exec {
-      $name:
-        command => "/usr/bin/wget --no-check-certificate -q https://www.grid5000.fr/packages/debian/jessie/${name}_amd64.deb -O /tmp/${name}.deb",
-        creates => "/tmp/${name}.deb";
-    }
-    package {
-      $name:
-        ensure  => installed,
-        provider => dpkg,
-        source   => "/tmp/${name}.deb",
-        require  =>  Exec["${name}"];
-    }
-  }
-
   # TODO: add non debian version
   # TODO: add condition over kernel version to get mpss packages at good version
   # mpss-modules-3.2.0-4-amd64
@@ -66,13 +49,6 @@ class env::big::mic ($enable = false) {
       mode    => 0755,
       owner   => root,
       group   => root;
-    '/etc/apt/sources.list.d/apt_grid5000.list':
-      ensure  => file,
-      mode    => '0644',
-      owner   => root,
-      group   => root,
-      content => "# grid5000
-deb http://apt.nancy.grid5000.fr/debian sid main ";
     '/etc/init.d/mpss':
       ensure  => file,
       mode    => 0755,
@@ -114,13 +90,6 @@ deb http://apt.nancy.grid5000.fr/debian sid main ";
       group   => root,
       source  => "puppet:///modules/env/big/mic/fstab";
   }
-
-  exec {
-    '/usr/bin/apt-get update':
-      refreshonly => true;
-  }
-
-  File['/etc/apt/sources.list.d/apt_grid5000.list'] ~> Exec['/usr/bin/apt-get update']-> Package[$installed_packages]
 
   service {
     'mpss':

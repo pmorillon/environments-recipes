@@ -1,10 +1,15 @@
-class env::nfs::ntp ( $drift_file = nil ) {
+class env::nfs::ntp ( $drift_file = false ) {
 
   $ntp = [ 'ntp', 'ntpdate' ]
   package {
-    $ntp:
-      ensure    =>  installed,
-  }
+    'ntpdate':
+      ensure    => installed;
+    'ntp':
+      ensure    => installed,
+      require   => Package['openntpd'];
+    'openntpd':
+      ensure    => absent;
+  }# Here we forced ntp package to be 'ntp' and not 'openntp' because ntp is listed as dependencie by g5kchecks and conflict openntp.
 
   file {
     '/etc/ntp.conf':
@@ -16,14 +21,15 @@ class env::nfs::ntp ( $drift_file = nil ) {
       notify    => Service['ntp'];
   }
 
-  unless $drift_file == nil {
+  if $drift_file {
     file {
       '/var/lib/ntp/ntp.drift':
         ensure    => file,
         owner     => ntp,
         group     => ntp,
         mode      => 0644,
-        content   => "";
+        content   => "",
+        require   => Package[$ntp];
     }
   }
 

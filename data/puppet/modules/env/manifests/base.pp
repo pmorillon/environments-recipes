@@ -1,32 +1,42 @@
 # This file contains the 'base' class used to configure a basic environment to be executed in grid'5000.
 
-class env::base (){
+class env::base ( $parent_parameters = {} ){
 
+  $base_parameters = {
+    misc_keep_tmp => true,
+    ganglia_enable => false
+  }
+
+  $parameters = merge ( $parent_parameters, $base_parameters )
   # Include min class
-  include 'env::min'
+  class {
+    'env::min':
+      parent_parameters => $parameters;
+  }
 
   # User packages
-  include 'env::base::packages'
+  class { 'env::base::packages': }
   # Include kexec-tools
-  include 'env::base::kexec'
+  class { 'env::base::kexec': }
   # SSh modification
-  include 'env::base::ssh'
+  class { 'env::base::ssh': }
   # Sshfs
-  include 'env::base::sshfs'
+  class { 'env::base::sshfs': }
   # Specific tuning
-  include 'env::base::tuning'
+  class { 'env::base::tuning': }
   # Cpufreq
-  include 'env::base::cpufreq'
+  class { 'env::base::cpufreq': }
   # Ganglia
-  include 'env::base::ganglia'
+  class {
+    'env::base::ganglia':
+      enable => $parameters['ganglia_enable']
+  }
   #TODO: merge ib and mx as 'high perf network' (or equivalent)?
   # Infiniband
-  include 'env::base::infiniband'
+  class { 'env::base::infiniband': }
   # MX ?
-  include 'env::base::mx'
+  class { 'env::base::mx': }
   # Openmpi
-  include 'env::base::openmpi'
-  # misc
-  include 'env::base::misc'
+  class { 'env::base::openmpi': }
 
 }

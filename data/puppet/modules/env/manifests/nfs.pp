@@ -1,21 +1,29 @@
 # This file contains the 'nfs' class used to configure a basic environment with nfs support to be executed in grid'5000.
 
-class env::nfs (){
-
+class env::nfs ( $parent_parameters = {} ){
+  $nfs_parameters = {
+    ntp_drift_file => false
+  }
+  $parameters = merge( $parent_parameters, $nfs_parameters )
   # Include base class
-  include 'env::base'
-
+  class {
+    'env::base':
+      parent_parameters => $parameters
+  }
   # Openiscsi (storage5k)
-  include 'env::nfs::openiscsi'
+  class { 'env::nfs::openiscsi': }
   # Ceph
-  include 'env::nfs::ceph'
+  class { 'env::nfs::ceph': }
   # ntp (required by nfs)
-  include 'env::nfs::ntp'
+  class {
+    'env::nfs::ntp':
+      drift_file => $parameters['ntp_drift_file']
+  }
   # package (shells)
-  include 'env::nfs::packages'
+  class { 'env::nfs::packages': }
   # ldap
-  include 'env::nfs::ldap'
+  class { 'env::nfs::ldap': }
   # nfs
-  include 'env::nfs::nfs'
+  class { 'env::nfs::nfs': }
 
 }

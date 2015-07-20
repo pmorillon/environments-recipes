@@ -1,11 +1,19 @@
 # This file contains the 'big' class used to configure improved environment to be executed in grid'5000.
 
-class env::big (){
+class env::big ( $parent_parameters = {} ){
+
+  $big_parameters = {
+    mic_enable => false
+  }
+  $parameters = merge( $parent_parameters, $big_parameters )
 
   # Include prod class
-  include 'env::nfs'
+  class {
+    'env::nfs':
+      parent_parameters => $parameters
+  }
   # Users packages
-  include 'env::big::packages'
+  class { 'env::big::packages': }
   # gem
   if $env::target_g5k {
     class { 'env::big::gem':
@@ -13,11 +21,14 @@ class env::big (){
     }
   }
   # mail
-  include 'env::big::mail'
+  class { 'env::big::mail': }
   # kvm
-  include 'env::big::kvm'
+  class { 'env::big::kvm': }
   # nvidia
-  include 'env::big::nvidia'
+  class { 'env::big::nvidia': }
   # xeon phi
-  include 'env::big::mic'
+  class {
+    'env::big::mic':
+      enable  => $parameters['mic_enable']
+  }
 }
