@@ -10,12 +10,12 @@ class env::base::ganglia ($enable = false){
       ensure  => directory,
       owner   => root,
       group   => root,
-      mode    => 0644;
+      mode    => '0644';
     '/etc/ganglia/gmond.conf' :
       ensure  => file,
       owner   => root,
       group   => root,
-      mode    => 0644,
+      mode    => '0644',
       source  => "puppet:///modules/env/base/ganglia/gmond.conf",
       require => File['/etc/ganglia'];
   }

@@ -1,6 +1,7 @@
 # Provision a VM by launching a puppet agent (standalone)
 - puppet_build_path: "/tmp/puppet_recipes"
 - hiera_path: "/tmp/hiera"
+- puppet_path: "/opt/puppetlabs/bin"
 
 - import_puppet_recipes:
   - exec_in: mkdir -p $$puppet_build_path
@@ -12,7 +13,7 @@
   - pipe:
     - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data/hiera .
     - exec_in: tar xfp - -C $$hiera_path
-  - exec_in: puppet config set hiera_config $$hiera_path/hiera.yaml
+  - exec_in: $$puppet_path/puppet config set hiera_config $$hiera_path/hiera.yaml
 - run_puppet:
   - exec_in: |
       if [ -z "$$flavor" ]; then
@@ -20,4 +21,4 @@
       else
         FLAVOR=$$flavor
       fi
-  - exec_in: puppet apply --modulepath=$$puppet_build_path/modules $$puppet_build_path/manifests/$FLAVOR.pp
+  - exec_in: $$puppet_path/puppet apply --modulepath=$$puppet_build_path/modules:/etc/puppetlabs/code/environments/production/modules $$puppet_build_path/manifests/$FLAVOR.pp

@@ -16,7 +16,7 @@ class env::nfs::ntp ( $drift_file = false ) {
       ensure    => file,
       owner     => root,
       group     => root,
-      mode      => 0644,
+      mode      => '0644',
       content   => template("env/nfs/ntp/ntp.conf.erb"),
       notify    => Service['ntp'];
   }
@@ -27,7 +27,7 @@ class env::nfs::ntp ( $drift_file = false ) {
         ensure    => file,
         owner     => ntp,
         group     => ntp,
-        mode      => 0644,
+        mode      => '0644',
         content   => "",
         require   => Package[$ntp];
     }

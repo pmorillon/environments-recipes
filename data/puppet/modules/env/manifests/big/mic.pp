@@ -1,3 +1,23 @@
+
+# This is a dirty workaround induced by this bug in puppet: https://projects.puppetlabs.com/issues/15718 or https://tickets.puppetlabs.com/browse/PUP-1263
+# this is used later to automatically install a package with dpkg after a retrivial using wget. Looped on an array.
+define my_package {
+  exec {
+    $name:
+      command => "/usr/bin/wget --no-check-certificate -q https://www.grid5000.fr/packages/debian/jessie/${name}_amd64.deb -O /tmp/${name}.deb",
+      creates => "/tmp/${name}.deb";
+  }
+  package {
+    $name:
+      ensure  => installed,
+      provider => dpkg,
+      source   => "/tmp/${name}.deb",
+      require  =>  Exec["${name}"];
+  }
+}
+
+
+
 class env::big::mic ($enable = false) {
 
   # TODO: add non debian version
@@ -46,46 +66,46 @@ class env::big::mic ($enable = false) {
     # only used for compilation
     '/tmp/mpss-modules':
       ensure  => directory,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root;
     '/etc/init.d/mpss':
       ensure  => file,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root,
       source  => "puppet:///modules/env/big/mic/mpss";
     '/etc/mpss':
       ensure  => directory,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root;
     '/var/mpss':
       ensure  => directory,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root;
    '/var/mpss/mic0':
       ensure  => directory,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root,
       require => File['/var/mpss'];
     '/var/mpss/mic0/etc/':
       ensure  => directory,
-      mode    => 0755,
+      mode    => '0755',
       owner   => root,
       group   => root,
       require => File['/var/mpss/mic0'];
     '/var/mpss/mic0.filelist':
       ensure  => file,
-      mode    => 0655,
+      mode    => '0655',
       owner   => root,
       group   => root,
       source  => "puppet:///modules/env/big/mic/mic0.filelist";
     '/var/mpss/mic0/etc/fstab':
       ensure  => file,
-      mode    => 0655,
+      mode    => '0655',
       owner   => root,
       group   => root,
       source  => "puppet:///modules/env/big/mic/fstab";

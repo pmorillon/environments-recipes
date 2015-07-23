@@ -24,12 +24,12 @@ class env::big::mail () {
       ensure    => directory,
       owner     => root,
       group     => root,
-      mode      => 644;
+      mode      => '644';
     '/etc/postfix/main.cfg':
       ensure    => present,
       owner     => root,
       group     => root,
-      mode      => 644,
+      mode      => '644',
       source    => 'puppet:///modules/env/big/mail/postfix.cfg',
       require   => File['/etc/postfix'];
   }

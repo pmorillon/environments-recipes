@@ -40,7 +40,7 @@ class env::base::mx ($architecture = 'amd64') {
       ensure     => file,
       owner      => root,
       group      => root,
-      mode       => 0755,
+      mode       => '0755',
       source     => 'puppet:///modules/env/base/mx/ip_over_mx',
       require    => Exec['mx_local_install']
   }

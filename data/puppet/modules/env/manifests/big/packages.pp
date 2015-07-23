@@ -41,12 +41,14 @@ class env::big::packages () {
   package {
     [ $editors, $utils, $dev, $system ]:
       ensure   => installed;
-    'rake':
+    'rake_gem':
+      name     => 'rake',
+      provider => gem,
       ensure   => installed,
       require  => Package['ruby'];
     $gems:
       ensure   => installed,
       provider => gem,
-      require  => Package['rake'];
+      require  => Package['rake_gem'];
   }
 }

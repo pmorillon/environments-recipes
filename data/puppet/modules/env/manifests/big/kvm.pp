@@ -14,26 +14,26 @@ class env::big::kvm () {
       ensure    => present,
       owner     => root,
       group     => root,
-      mode      => 0440,
+      mode      => '0440',
       source    => 'puppet:///modules/env/big/kvm/sudoers',
       require   => Package['sudo'];
     '/etc/udev/rules.d/60-qemu-system.rules':
       ensure    => present,
       owner     => root,
       group     => root,
-      mode      => 0644,
+      mode      => '0644',
       source    => 'puppet:///modules/env/big/kvm/60-qemu-system.rules';
     '/usr/local/bin/create_tap':
       ensure    => present,
       owner     => root,
       group     => root,
-      mode      => 0755,
+      mode      => '0755',
       source    => 'puppet:///modules/env/big/kvm/create_tap';
     '/usr/local/bin/random_mac':
       ensure    => present,
       owner     => root,
       group     => root,
-      mode      => 0755,
+      mode      => '0755',
       source    => 'puppet:///modules/env/big/kvm/random_mac';
   }
   # Not sure this is required anymore. Try without, uncomment if needed
