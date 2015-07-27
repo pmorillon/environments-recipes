@@ -6,7 +6,7 @@ class env::min ( $parent_parameters = {} ) {
     misc_root_pwd => '$1$qzZwnZXQ$Ak1xs7Oma6HUHw/xDJ8q91',
     misc_keep_tmp => false,
   }
-  $parameters = merge( $parent_parametels, $min_parameters )
+  $parameters = merge( $min_parameters, $parent_parameters )
 
   # Package manager
   case $operatingsystem {

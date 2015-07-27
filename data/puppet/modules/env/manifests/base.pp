@@ -7,7 +7,7 @@ class env::base ( $parent_parameters = {} ){
     ganglia_enable => false
   }
 
-  $parameters = merge ( $parent_parameters, $base_parameters )
+  $parameters = merge ( $base_parameters, $parent_parameters )
   # Include min class
   class {
     'env::min':

@@ -5,7 +5,7 @@ class env::big ( $parent_parameters = {} ){
   $big_parameters = {
     mic_enable => false
   }
-  $parameters = merge( $parent_parameters, $big_parameters )
+  $parameters = merge( $big_parameters, $parent_parameters )
 
   # Include prod class
   class {
