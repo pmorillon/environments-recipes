@@ -7,11 +7,6 @@ class env::min::network {
         group  => "root",
         mode   => '0644',
         source => "puppet:///modules/env/min/network/hosts";
-#    '/etc/hostname':
-#        owner  => "root",
-#        group  => "root",
-#        mode   => '0644',
-#        source => "puppet:///modules/env/min/network/hostname";
     '/etc/dhcp/dhclient-exit-hooks.d/g5k-update-host-name':
         owner  => "root",
         group  => "root",
