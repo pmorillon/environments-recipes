@@ -14,14 +14,14 @@ class env::base::infiniband (){
       ensure   => file,
       owner    => root,
       group    => root,
-      mode     => '0644',
+      mode     => '0755',
       source   => 'puppet:///modules/env/base/infiniband/openib.conf',
       require  => Package[$infiniband_packages];
     '/etc/init.d/openibd':
       ensure   => file,
       owner    => root,
       group    => root,
-      mode     => '0644',
+      mode     => '0755',
       source   => 'puppet:///modules/env/base/infiniband/openibd',
       require  => Package[$infiniband_packages];
     '/etc/network/if-up.d/ip_over_ib':
