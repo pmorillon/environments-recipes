@@ -21,4 +21,4 @@
       else
         FLAVOR=$$flavor
       fi
-  - exec_in: $$puppet_path/puppet apply --modulepath=$$puppet_build_path/modules:/etc/puppetlabs/code/environments/production/modules $$puppet_build_path/manifests/$FLAVOR.pp
+  - exec_in: $$puppet_path/puppet apply -d --modulepath=$$puppet_build_path/modules:/etc/puppetlabs/code/environments/production/modules $$puppet_build_path/manifests/$FLAVOR.pp | tee /tmp/puppet_exec.log
