@@ -22,6 +22,6 @@ class env ($given_variant){
     'prod':  { include env::prod }
     'big' :  { include env::big }
     'xen' :  { include env::xen }
-    default: { notify {"flavor $variant is not implemented":}}
+    default: { notify {"variant $variant is not implemented":}}
   }
 }

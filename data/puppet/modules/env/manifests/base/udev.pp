@@ -1,4 +1,4 @@
-# This file complete udev setup for infiniband. Udev is supposed to be installed by min flavor
+# This file complete udev setup for infiniband. Udev is supposed to be installed by min variant
 class env::base::udev (){
 
   file {

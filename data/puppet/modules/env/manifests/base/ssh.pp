@@ -1,4 +1,4 @@
-# This class add configurations to sshd. It consider ssh server / service are already declared (in 'min' flavor).
+# This class add configurations to sshd. It consider ssh server / service are already declared (in 'min' variant).
 class env::base::ssh (){
 
   augeas {

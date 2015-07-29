@@ -16,9 +16,9 @@
   - exec_in: $$puppet_path/puppet config set hiera_config $$hiera_path/hiera.yaml
 - run_puppet:
   - exec_in: |
-      if [ -z "$$flavor" ]; then
-        FLAVOR=prod
+      if [ -z "$$variant" ]; then
+        VARIANT=prod
       else
-        FLAVOR=$$flavor
+        VARIANT=$$variant
       fi
-  - exec_in: $$puppet_path/puppet apply -d --modulepath=$$puppet_build_path/modules:/etc/puppetlabs/code/environments/production/modules $$puppet_build_path/manifests/$FLAVOR.pp | tee /tmp/puppet_exec.log
+  - exec_in: $$puppet_path/puppet apply -d --modulepath=$$puppet_build_path/modules:/etc/puppetlabs/code/environments/production/modules $$puppet_build_path/manifests/$VARIANT.pp | tee /tmp/puppet_exec.log
