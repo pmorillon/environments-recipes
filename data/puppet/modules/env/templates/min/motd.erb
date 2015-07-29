@@ -1,10 +1,10 @@
 
-<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::variant') %>-<%= scope.lookupvar('env::version') %> (Image based on Debian <%= @lsbdistcodename %> for AMD64/EM64T)
+<%= @lsbdistcodename.capitalize %>-x64-<%= scope.lookupvar('env::variant') %>-<%= scope.lookupvar('env::version') %> (Image based on Debian <%= @lsbdistcodename.capitalize %> for AMD64/EM64T)
   Maintained by support-staff <support-staff@lists.grid5000.fr>
 
 <% case scope.lookupvar('env::variant')
        when "min" -%>
-  This is a minimal version of <%= @lsbdistcodename %> reference image.
+  This is a minimal version of <%= @lsbdistcodename.capitalize %> reference image.
 
     <% end -%>
 Applications
