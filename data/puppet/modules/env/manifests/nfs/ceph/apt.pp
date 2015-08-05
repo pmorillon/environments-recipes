@@ -13,6 +13,11 @@ class env::nfs::ceph::apt (
       refreshonly => true;
   }
 
+  # TODO: clean this crap. This is an ultra-dirty things induced by "The dirty ceph patch" Cf explonation in "nfs/ceph.pp"
+  $target_distrib = $lsbdistcodename ? {
+    'jessie'  => wheezy,
+    default   => $lsbdistcodename,
+  }
   file {
     '/etc/apt/sources.list.d/ceph.list':
       ensure  => file,
@@ -20,8 +25,8 @@ class env::nfs::ceph::apt (
       owner   => root,
       group   => root,
       content => "# ceph
-deb http://ceph.com/debian-${version}/ ${::lsbdistcodename} main
-deb-src http://ceph.com/debian-${version}/ ${::lsbdistcodename} main";
+deb http://ceph.com/debian-${version}/ ${target_distrib} main
+deb-src http://ceph.com/debian-${version}/ ${target_distrib} main";
   }
 
   Exec['import_ceph_apt_key'] -> File['/etc/apt/sources.list.d/ceph.list'] ~> Exec['/usr/bin/apt-get update']
