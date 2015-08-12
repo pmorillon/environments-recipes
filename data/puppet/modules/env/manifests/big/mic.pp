@@ -48,7 +48,7 @@ class env::big::mic ($enable = false) {
       require => Exec['retrieve_mpss-modules'];
     'install_mpss-modules':
       environment => ["INSTALL_MOD_PATH=/lib/modules/$(/bin/uname -r)/extra", "MIC_CARD_ARCH=k1om"],
-      command => "/usr/bin/make ; /usr/bin/make install",
+      command => "/usr/bin/make ; /usr/bin/make install ; /sbin/depmod -a",
       cwd     => "/tmp/mpss-modules/",
       require => [Exec['extract_mpss-modules'], Exec['prepare_kernel_module_build']]; #prepare_kernel_module_build is defined in big/nvidia/drivers.pp
   }
@@ -59,6 +59,11 @@ class env::big::mic ($enable = false) {
       context => "/files/etc/modules",
       changes => ["ins mic after #comment[last()]",],
       onlyif  => "match mic size == 0 ";
+    'blacklist_mic_host':
+      context   => "/files/etc/modprobe.d/blacklist.conf",
+      tag       => "modules",
+      changes   =>["set blacklist[last()+1] mic_host",],
+      onlyif    =>"match blacklist[.='mic_host'] size == 0 ";
   }
 
 
