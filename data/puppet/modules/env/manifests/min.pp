@@ -43,5 +43,7 @@ class env::min ( $parent_parameters = {} ) {
   }
   # kernel installation
   class { 'env::min::kernel': }
+  # Tagging to recognize images
+  class { 'env::min::image_versioning': }
 
 }
