@@ -17,6 +17,7 @@ global:
     isc-dhcp-client isc-dhcp-common ifupdown iptables iproute2 iputils-ping
     openssh-server
   setup_packages: >
+    extlinux
 
 bootstrap:
   - "@base"
@@ -31,6 +32,7 @@ setup:
     - dist_upgrade: true
   - install_software:
     - packages: $$setup_packages
+  - install_bootloader
   - setup_orchestrator
   - run_orchestrator
 
