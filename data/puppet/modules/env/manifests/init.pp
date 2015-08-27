@@ -2,6 +2,8 @@ class env ($given_variant){
   ## Global variables used for this build
   # build to be run inside g5k (could become a parameter)
   $target_g5k = true
+  # build from inside g5k (proxy parameter may be set before running any action or network will be unavailable)
+  $from_g5k = false
 
   ## Variant (min/base/nfs/prod/big/xen)
   # need to create a local variable to access it from any sub-recipe.
