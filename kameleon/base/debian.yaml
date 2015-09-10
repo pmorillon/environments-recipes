@@ -22,9 +22,12 @@ global:
 
   # Distribution
   distrib: debian
-  arch: amd64
-  kernel_arch: $$arch
+  arch: x86_64
+  kernel_arch: amd64
   hostname: kameleon-$$distrib
+
+  ## Kameleon iso bootstrap
+  boot2kameleon_url: http://kameleon.imag.fr/iso/debian-jessie-$${arch}-live.iso
 
   ## System variables. Required by kameleon engine
   # Include specific steps

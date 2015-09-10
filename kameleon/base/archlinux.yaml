@@ -25,6 +25,9 @@ global:
   arch: x86_64
   hostname: kameleon-$$distrib
 
+  ## Kameleon iso bootstrap
+  boot2kameleon_url: http://kameleon.imag.fr/iso/debian-jessie-$${arch}-live.iso
+
   ## System variables. Required by kameleon engine
   # Include specific steps
   include_steps:

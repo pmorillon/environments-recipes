@@ -10,7 +10,7 @@
       debootstrap \
       $VARIANT \
       --no-check-gpg \
-      --arch=$$arch \
+      --arch=$$kernel_arch \
       --include="$$include_pkg" \
       $$release \
       $$rootfs \
