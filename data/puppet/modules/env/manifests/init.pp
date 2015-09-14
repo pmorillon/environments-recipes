@@ -8,7 +8,7 @@ class env ($given_variant){
   ## Variant (min/base/nfs/prod/big/xen)
   # need to create a local variable to access it from any sub-recipe.
   $variant = $given_variant
-  $version = "0.1.0"
+  $version = file('env/version')
 
   ## Define a stage that will be runned after most of normal installation
   # As an exemple, this is used to setup apt-proxy. If setup earlier, any package installation would fail (proxy unreachable)
