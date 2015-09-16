@@ -47,7 +47,7 @@ bootstrap:
     - release: $$release
     - arch: $$arch
     - repository: http://ftp.debian.org/debian/
-    - variant: default  # default|minbase|buildd|fakechroot|scratchbox
+    - variant_debootstrap: default  # default|minbase|buildd|fakechroot|scratchbox
 
 # Install and configuration steps
 # WARNING: this part should be independante from the out context (whenever
