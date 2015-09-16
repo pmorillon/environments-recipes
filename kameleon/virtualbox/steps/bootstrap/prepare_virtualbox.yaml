@@ -9,6 +9,10 @@
   - exec_local: rm -f $$virtualbox_image_disk
   - exec_local: VBoxManage createhd --filename $$virtualbox_image_disk --size $$virtualbox_image_size 2>&1
 
+  - on_export_init:
+    - check_cmd_local: guestfish
+    - exec_local: echo -e "run\nzerofree /dev/sda1" | guestfish -a $$virtualbox_image_disk
+
 - register_vm:
   - exec_local: echo "Creating virtual machine"
   - exec_local: VBoxManage createvm --name $$virtualbox_vmid --register

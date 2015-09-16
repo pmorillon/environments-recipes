@@ -31,8 +31,3 @@
     - exec_in: grep -q "Removing puppet-agent" /tmp/temp_purge && rm -rvf /etc/puppetlabs/puppet
     - exec_in: grep -q "Removing puppet-agent" /tmp/temp_purge && (rmdir /etc/puppetlabs && rc=$? || rc=$?)
     - exec_local: rm -r $$kameleon_cwd/script_dir
-    # this sub-space portion is made to reduce disk space allocated by temp files (cuda?), and remove it from qcow2
-    - exec_in: |
-        echo "Nullify freespace..."
-        dd if=/dev/zero of=/bigemptyfile bs=1M 2>&1 >/dev/null || true
-        rm -f /bigemptyfile

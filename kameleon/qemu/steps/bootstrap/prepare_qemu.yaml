@@ -11,6 +11,10 @@
       rm -f $$qemu_image_disk
       qemu-img create -f qcow2 $$qemu_image_disk $$qemu_image_size
 
+  - on_export_init:
+    - check_cmd_local: guestfish
+    - exec_local: echo -e "run\nzerofree /dev/sda1" | guestfish -a $$qemu_image_disk
+
 - delete_initial_image:
   - on_checkpoint: skip
   - on_export_clean:
