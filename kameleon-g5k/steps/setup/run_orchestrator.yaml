@@ -2,16 +2,19 @@
 - puppet_build_path: "/tmp/puppet_recipes"
 - hiera_path: "/tmp/hiera"
 - puppet_path: "/opt/puppetlabs/bin"
+- puppet_local_path: $$kameleon_data_dir/puppet
+- hiera_local_path: $$kameleon_data_dir/hiera
+
 
 - import_puppet_recipes:
   - exec_in: mkdir -p $$puppet_build_path
   - pipe:
-    - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data/puppet .
+    - exec_local: tar -cf - -C $$puppet_local_path .
     - exec_in: tar xfp - -C $$puppet_build_path
 - import_hiera:
   - exec_in: mkdir -p $$hiera_path
   - pipe:
-    - exec_local: tar -cf - -C $$kameleon_recipe_dir/../../data/hiera .
+    - exec_local: tar -cf - -C $$hiera_local_path .
     - exec_in: tar xfp - -C $$hiera_path
   - exec_in: $$puppet_path/puppet config set hiera_config $$hiera_path/hiera.yaml
 - run_puppet:

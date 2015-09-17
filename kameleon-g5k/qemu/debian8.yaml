@@ -11,6 +11,7 @@ extend: ../../kameleon/qemu/debian8.yaml
 checkpoint: qemu.yaml
 #== Global variables use by Kameleon engine and the steps
 global:
+  variant: prod # default walue for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
   qemu_image_size: 15G
   bootstrap_packages: >
     linux-image-$$kernel_arch
