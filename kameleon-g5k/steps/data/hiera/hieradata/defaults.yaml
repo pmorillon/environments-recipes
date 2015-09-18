@@ -1,0 +1,63 @@
+---
+env::prod::misc::rootpwd: ""
+env::prod::oar::ssh:
+  grenoble:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  lille:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  luxembourg:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  lyon:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  nancy:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  nantes:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  reims:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  rennes:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  sophia:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+
+  toulouse:
+    oarnodesetting_ssh_key: ""
+    oarnodesetting_ssh_key_pub: ""
+    id_rsa: ""
+    id_rsa_pub: ""
+

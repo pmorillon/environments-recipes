@@ -2,4 +2,4 @@
 .ruby-gemset
 *.swp
 build
-kameleon-g5k/steps/data/hiera/hieradata/
+kameleon-g5k/steps/data/hiera/hieradata/common.yaml
