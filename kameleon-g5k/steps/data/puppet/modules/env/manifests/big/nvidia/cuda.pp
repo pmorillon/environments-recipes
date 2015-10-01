@@ -1,7 +1,7 @@
 class env::big::nvidia::cuda () {
 
   # May be changed to a link inside g5k if required
-  $driver_source = 'http://developer.download.nvidia.com/compute/cuda/7_0/Prod/local_installers/cuda_7.0.28_linux.run'
+  $driver_source = 'https://www.grid5000.fr/packages/debian/cuda_7.0.28_linux.run'
   $opengl_packages = ['ocl-icd-libopencl1', 'opencl-headers', 'amd-opencl-icd']
 
   exec{
