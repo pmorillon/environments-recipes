@@ -11,7 +11,7 @@
 
   - on_export_init:
     - check_cmd_local: guestfish
-    - exec_local: echo -e "run\nzerofree /dev/sda1" | guestfish -a $$virtualbox_image_disk
+    - exec_local: echo -e "run\nzerofree /dev/sda1" | LIBGUESTFS_CACHEDIR=$$kameleon_cwd guestfish -a $$virtualbox_image_disk
 
 - register_vm:
   - exec_local: echo "Creating virtual machine"
