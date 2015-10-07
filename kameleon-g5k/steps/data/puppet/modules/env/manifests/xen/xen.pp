@@ -94,6 +94,25 @@ class env::xen::xen () {
         mode     => '0644',
         source   => 'puppet:///modules/env/min/apt/g5k-proxy',
         require  => File['/etc/xen-tools/skel/etc/apt/apt.conf.d'];
+      '/etc/xen-tools/skel/etc/dhcp':
+        ensure   => directory,
+        owner    => root,
+        group    => root,
+        mode     => '0644',
+        require  => File['/etc/xen-tools/skel/etc'];
+      '/etc/xen-tools/skel/etc/dhcp/dhclient-exit-hooks.d':
+        ensure   => directory,
+        owner    => root,
+        group    => root,
+        mode     => '0644',
+        require  => File['/etc/xen-tools/skel/etc/dhcp'];
+      '/etc/xen-tools/skel/etc/dhcp/dhclient-exit-hooks.d/g5k-update-host-name':
+        ensure   => file,
+        owner    => root,
+        group    => root,
+        mode     => '0644',
+        source   => 'puppet:///modules/env/min/network/g5k-update-host-name',
+        require  => File['/etc/xen-tools/skel/etc/dhcp/dhclient-exit-hooks.d'];
     }
   }
 
@@ -114,9 +133,10 @@ class env::xen::xen () {
   }
   exec {
     'create_example_domU':
-      command  => '/usr/bin/xen-create-image --hostname=domU --role=udev --genpass=0 --password=grid5000 --dhcp --mac=$(random_mac) --bridge=br0',
+      command  => '/usr/bin/xen-create-image --hostname=domU --role=udev --genpass=0 --password=grid5000 --dhcp --mac=$(random_mac) --bridge=br0 --size=1G',
       environment => $proxy_environment,
       creates  => '/etc/xen/domU.cfg',
+      timeout  => 600,
       require => [
         Package['xen-tools', 'xen-utils'],
         File_line['/etc/xen-tools/skel/root/.ssh/authorized_keys dom0_key'],
