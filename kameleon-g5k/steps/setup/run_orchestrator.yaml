@@ -4,6 +4,9 @@
 - puppet_path: "/opt/puppetlabs/bin"
 - puppet_local_path: $$kameleon_data_dir/puppet
 - hiera_local_path: $$kameleon_data_dir/hiera
+- git_tag_file: modules/env/files/min/image_versioning/git_tag
+- kameleon_repo_name : "default"
+
 
 
 - import_puppet_recipes:
@@ -17,6 +20,21 @@
     - exec_local: tar -cf - -C $$hiera_local_path .
     - exec_in: tar xfp - -C $$hiera_path
   - exec_in: $$puppet_path/puppet config set hiera_config $$hiera_path/hiera.yaml
+
+# This step is VERY specific to g5k recipes.
+# It extracts last git commit hash from local repo or $HOME/.kameleon.d/repos/$$kameleon_repo_name and store it in $$git_tag_file in the image.
+- set_git_tag:
+  - pipe:
+    - exec_local: |
+        if $(git status &> /dev/null) ; then
+          git log -n 1 | grep commit | head -n 1 | awk '{print $2}';
+        elif $( cd $HOME/.kameleon.d/repos/$$kameleon_repo_name/ && git status &>/dev/null); then
+          cd $HOME/.kameleon.d/repos/$$kameleon_repo_name/ && git log -n 1 | grep commit | head -n 1 | awk '{print $2}';
+        else
+          echo "Error: Kameleon could find git log in local or in $HOME/.kameleon.d/repos/$$kameleon_repo_name/" ;
+        fi
+    - exec_in: cat - >> $$puppet_build_path/$$git_tag_file
+
 - run_puppet:
   - exec_in: |
       if [ -z "$$variant" ]; then
