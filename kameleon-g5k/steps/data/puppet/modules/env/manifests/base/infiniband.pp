@@ -29,7 +29,7 @@ class env::base::infiniband (){
       owner    => root,
       group    => root,
       mode     => '0755',
-      source   => 'puppet:///modules/env/base/infiniband/ip_over_ib',
+      content  => template('env/base/infiniband/ip_over_ib.erb'),
       require  => Package[$infiniband_packages];
 
   }
