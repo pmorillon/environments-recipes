@@ -31,7 +31,13 @@ class env::base::infiniband (){
       mode     => '0755',
       content  => template('env/base/infiniband/ip_over_ib.erb'),
       require  => Package[$infiniband_packages];
-
+   '/lib/udev/rules.d/90-ib.rules':
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0644',
+      source  => 'puppet:///modules/env/base/infiniband/90-ib.rules',
+      require => Package['udev'];
   }
 
   service {
