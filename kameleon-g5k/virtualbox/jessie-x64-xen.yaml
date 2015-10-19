@@ -1,0 +1,20 @@
+#==============================================================================
+# vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
+#==============================================================================
+#
+# DESCRIPTION: Debian 8 (Jessie) base system built with virtualbox.
+#
+#==============================================================================
+---
+extend: jessie-x64-min.yaml # Cf this recipe for a real content. This recipe only overwrite variant.
+global:
+  variant: xen
+
+bootstrap:
+  - "@base"
+
+setup:
+  - "@base"
+
+export:
+  - "@base"

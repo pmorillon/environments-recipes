@@ -1,7 +1,13 @@
 # Generate a dsc file as used on grid'5000 by kaenv
 
-- output: $$kameleon_cwd/$$kameleon_recipe_name
 - dashes: "---" # kameleon eats my dash if I don't use this dirty hack :-(
+- tar_out_opts: numericowner:true excludes:"./etc/fstab ./tmp/*"
+
+- save_as_tgz:
+  - check_cmd_local: guestfish
+  - check_cmd_local: gzip
+  - exec_local: echo "Exporting appliance to $$output.tgz"
+  - exec_local: LIBGUESTFS_CACHEDIR=$$kameleon_cwd guestfish --ro -i tar-out -a $$input / - $$tar_out_opts | gzip --best > $$output.tgz
 
 - generate_dsc:
   - exec_local: echo "Creating description file for kaenv in $$output.dsc"

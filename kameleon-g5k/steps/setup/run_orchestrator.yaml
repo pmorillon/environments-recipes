@@ -5,6 +5,7 @@
 - puppet_local_path: $$kameleon_data_dir/puppet
 - hiera_local_path: $$kameleon_data_dir/hiera
 - git_tag_file: modules/env/files/min/image_versioning/git_tag
+- version_file: modules/env/files/version
 - kameleon_repo_name : "default"
 
 
@@ -34,6 +35,9 @@
           echo "Error: Kameleon could find git log in local or in $HOME/.kameleon.d/repos/$$kameleon_repo_name/" ;
         fi
     - exec_in: cat - >> $$puppet_build_path/$$git_tag_file
+# Same as above, but store version (kameleon global)
+- set_version:
+  - exec_in: echo "$${image_version_major}.$${image_version_minor}.$${image_version_patch}" > $$puppet_build_path/$$version_file
 
 - run_puppet:
   - exec_in: |
