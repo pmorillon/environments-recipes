@@ -19,6 +19,8 @@ global:
     openssh-server
   setup_packages: >
     extlinux
+  os_family: debian
+  os_release: jessie
 
 bootstrap:
   - "@base"
@@ -44,3 +46,4 @@ export:
     - output: $$kameleon_cwd/$$kameleon_recipe_name
     - save_as_tar_gz
     - save_as_qcow2
+  - generate_dsc

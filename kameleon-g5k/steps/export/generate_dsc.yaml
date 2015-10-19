@@ -1,0 +1,32 @@
+# Generate a dsc file as used on grid'5000 by kaenv
+
+- output: $$kameleon_cwd/$$kameleon_recipe_name
+- dashes: "---" # kameleon eats my dash if I don't use this dirty hack :-(
+
+- generate_dsc:
+  - exec_local: echo "Creating description file for kaenv in $$output.dsc"
+  - exec_local: |
+      cat << EOF > $$output.dsc
+      $${dashes}
+      name: $${os_release}-x64-$$variant
+      version: 0
+      description: $$os_family $$os_release $$variant
+      author: support-staff@lists.grid5000.fr
+      visibility: public
+      destructive: false
+      os: linux
+      image:
+        file: server:///grid5000/images/$${os_release}-x64-min.tgz
+        kind: tar
+        compression: gzip
+      postinstalls:
+      - archive: server:///grid5000/postinstalls/$${os_family}-x64-min-post.tgz
+        compression: gzip
+        script: traitement.ash /rambin
+      boot:
+        kernel: /vmlinuz
+        initrd: /initrd.img
+      filesystem: ext4
+      partition_type: 131
+      multipart: false
+      EOF
