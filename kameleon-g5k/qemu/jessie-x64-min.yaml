@@ -25,7 +25,8 @@ global:
   image_version_major: 0
   image_version_minor: 1
   image_version_patch: 0
-  output: "$$kameleon_cwd/$${kameleon_recipe_name}-$${image_version_major}.$${image_version_minor}" # output files basename
+  output: "$$kameleon_cwd/$${kameleon_recipe_name}" # output files basename
+  g5k_tgz_path: server:///grid5000/images/$${os_release}-x64-$${variant}.tgz
 
 bootstrap:
   - "@base"
