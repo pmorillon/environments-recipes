@@ -12,6 +12,7 @@
 - generate_dsc:
   - exec_local: echo "Creating description file for kaenv in $$output.dsc"
   - exec_local: |
+      if [[ "x$${variant}" != "xxen" ]]; then
       cat << EOF > $$output.dsc
       $${dashes}
       name: $${os_release}-x64-$$variant
@@ -26,7 +27,7 @@
         kind: tar
         compression: gzip
       postinstalls:
-      - archive: server:///grid5000/postinstalls/$${os_family}-x64-min-post.tgz
+      - archive: server:///grid5000/postinstalls/$${os_family}-x64-$${variant}-post.tgz
         compression: gzip
         script: traitement.ash /rambin
       boot:
@@ -36,3 +37,31 @@
       partition_type: 131
       multipart: false
       EOF
+      else
+      cat << EOF > $$output.dsc
+      $${dashes}
+      name: $${os_release}-x64-$$variant
+      version: $${image_version_major}
+      description: $$os_family $$os_release $$variant
+      author: support-staff@lists.grid5000.fr
+      visibility: public
+      destructive: false
+      os: xen
+      image:
+        file: $$g5k_tgz_path
+        kind: tar
+        compression: gzip
+      postinstalls:
+      - archive: server:///grid5000/postinstalls/$${os_family}-x64-$${variant}-post.tgz
+        compression: gzip
+        script: traitement.ash /rambin
+      boot:
+        kernel: /vmlinuz
+        initrd: /initrd.img
+        hypervisor: /hypervisor
+        hypervisor_params: dom0_mem=1000000
+      filesystem: ext4
+      partition_type: 131
+      multipart: false
+      EOF
+      fi
