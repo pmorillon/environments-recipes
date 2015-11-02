@@ -22,11 +22,10 @@ global:
     extlinux
   os_family: debian
   os_release: jessie
-  image_version_major: 0
-  image_version_minor: 1
-  image_version_patch: 0
+  image_version: 0
   output: "$$kameleon_cwd/$${kameleon_recipe_name}" # output files basename
   g5k_tgz_path: server:///grid5000/images/$${os_release}-x64-$${variant}.tgz
+  g5k_postinst_path: server:///grid5000/postinstalls/debian-x64-min-1.2-post.tgz
 
 bootstrap:
   - "@base"
@@ -49,6 +48,5 @@ export:
   - disable_checkpoint
   - virtualbox_save_appliance:
     - output: $$output
-#    - save_as_tar_gz
     - save_as_qcow2
   - export_g5k

@@ -6,6 +6,7 @@
 - hiera_local_path: $$kameleon_data_dir/hiera
 - git_tag_file: modules/env/files/min/image_versioning/git_tag
 - version_file: modules/env/files/version
+- postinst_file: modules/env/files/min/image_versioning/postinst
 - kameleon_repo_name : "default"
 
 
@@ -37,7 +38,10 @@
     - exec_in: cat - >> $$puppet_build_path/$$git_tag_file
 # Same as above, but store version (kameleon global)
 - set_version:
-  - exec_in: echo "$${image_version_major}.$${image_version_minor}.$${image_version_patch}" > $$puppet_build_path/$$version_file
+  - exec_in: echo "$${image_version}" > $$puppet_build_path/$$version_file
+# Same as above, but store postinst path to force version increment
+- set_postinst:
+  - exec_in: echo "$${g5k_postinst_path}" >> $$puppet_build_path/$$postinst_file
 
 - run_puppet:
   - exec_in: |

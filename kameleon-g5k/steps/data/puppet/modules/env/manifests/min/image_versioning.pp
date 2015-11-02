@@ -16,5 +16,11 @@ class env::min::image_versioning () {
       owner    => root,
       source   => 'puppet:///modules/env/min/image_versioning/git_tag',
       group    => root;
+    "/etc/kaenv/postinst":
+      ensure   => file,
+      mode     => '0644',
+      owner    => root,
+      source   => 'puppet:///modules/env/min/image_versioning/postinst',
+      group    => root;
   }
 }

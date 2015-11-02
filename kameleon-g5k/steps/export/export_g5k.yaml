@@ -18,7 +18,7 @@
       cat << EOF > $$output.dsc
       $${dashes}
       name: $${os_release}-x64-$$variant
-      version: $${image_version_major}
+      version: $${image_version}
       description: $$os_family $$os_release $$variant
       author: support-staff@lists.grid5000.fr
       visibility: public
@@ -29,7 +29,7 @@
         kind: tar
         compression: gzip
       postinstalls:
-      - archive: server:///grid5000/postinstalls/$${os_family}-x64-$${variant}-post.tgz
+      - archive: $$g5k_postinst_path
         compression: gzip
         script: traitement.ash /rambin
       boot:
@@ -43,7 +43,7 @@
       cat << EOF > $$output.dsc
       $${dashes}
       name: $${os_release}-x64-$$variant
-      version: $${image_version_major}
+      version: $${image_version}
       description: $$os_family $$os_release $$variant
       author: support-staff@lists.grid5000.fr
       visibility: public
@@ -54,7 +54,7 @@
         kind: tar
         compression: gzip
       postinstalls:
-      - archive: server:///grid5000/postinstalls/$${os_family}-x64-$${variant}-post.tgz
+      - archive: $$g5k_postinst_path
         compression: gzip
         script: traitement.ash /rambin
       boot:
