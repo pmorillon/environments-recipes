@@ -9,7 +9,7 @@
 extend: jessie-x64-min.yaml # Cf this recipe for a real content. This recipe only overwrite variant.
 global:
   variant: prod
-  g5k_postinst_path: server:///grid5000/postinstalls/debian-x64-5.1.0-postinstall-prod.tgz
+  g5k_postinst_path: server:///grid5000/postinstalls/debian-x64-5.1.2-postinstall-prod.tgz
 
 
 bootstrap:
