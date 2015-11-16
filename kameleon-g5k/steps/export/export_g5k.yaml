@@ -13,7 +13,6 @@
   - exec_local: echo "Creating description file for kaenv in $$output.dsc"
   - exec_local: |
       # Remove c-states from non min environmnents
-      if [[ "x$${variant}" != "xmin" ]]; then kaenv_kernel_params="  kernel_params: intel_idle.max_cstate=0 idle=poll"$'\n'; fi
       if [[ "x$${variant}" != "xxen" ]]; then
       cat << EOF > $$output.dsc
       $${dashes}
@@ -35,7 +34,7 @@
       boot:
         kernel: /vmlinuz
         initrd: /initrd.img
-      ${kaenv_kernel_params}filesystem: ext4
+      filesystem: ext4
       partition_type: 131
       multipart: false
       EOF
@@ -62,7 +61,7 @@
         initrd: /initrd.img
         hypervisor: /hypervisor
         hypervisor_params: dom0_mem=1000000
-      ${kaenv_kernel_params}filesystem: ext4
+      filesystem: ext4
       partition_type: 131
       multipart: false
       EOF

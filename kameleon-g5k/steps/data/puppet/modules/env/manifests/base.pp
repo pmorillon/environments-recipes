@@ -38,5 +38,7 @@ class env::base ( $parent_parameters = {} ){
   class { 'env::base::mx': }
   # Openmpi
   class { 'env::base::openmpi': }
+  # disable cstates
+  class { 'env::base::cstate': }
 
 }
