@@ -42,5 +42,5 @@ class env::base::tuning (){
   }
 }
 
-# C-state are DISABLED on node for jessie (and later?) environments, variant base and above (xen, big, prod, nfs).
-# This is done in Kadeploy description file. Parameter intel_idle.max_cstate=0 and idle=poll are used (cf image dsc file, or kaenv -p jessie-x64-{base,xen,nfs,big,prod})
+# C-state are DISABLED on node for jessie (and later?) environments, variant base and above (xen, big, default, nfs).
+# This is done in Kadeploy description file. Parameter intel_idle.max_cstate=0 and idle=poll are used (cf image dsc file, or kaenv -p jessie-x64-{base,xen,nfs,big,default})

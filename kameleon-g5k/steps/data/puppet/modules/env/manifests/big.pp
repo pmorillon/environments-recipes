@@ -7,7 +7,7 @@ class env::big ( $parent_parameters = {} ){
   }
   $parameters = merge( $big_parameters, $parent_parameters )
 
-  # Include prod class
+  # Include nfs class
   class {
     'env::nfs':
       parent_parameters => $parameters

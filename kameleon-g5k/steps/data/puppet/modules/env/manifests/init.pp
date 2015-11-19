@@ -5,7 +5,7 @@ class env ($given_variant){
   # build from inside g5k (proxy parameter may be set before running any action or network will be unavailable)
   $from_g5k = false
 
-  ## Variant (min/base/nfs/prod/big/xen)
+  ## Variant (min/base/base/nfs/big/default)
   # need to create a local variable to access it from any sub-recipe.
   $variant = $given_variant
   $version = file('env/version')
@@ -20,10 +20,10 @@ class env ($given_variant){
   case $variant {
     'min' :  { include env::min }
     'base':  { include env::base }
-    'nfs' :  { include env::nfs }
-    'prod':  { include env::prod }
-    'big' :  { include env::big }
     'xen' :  { include env::xen }
+    'nfs' :  { include env::nfs }
+    'big' :  { include env::big }
+    'default':  { include env::default }
     default: { notify {"variant $variant is not implemented":}}
   }
 }

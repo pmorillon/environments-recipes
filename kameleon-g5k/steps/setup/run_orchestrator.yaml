@@ -46,7 +46,7 @@
 - run_puppet:
   - exec_in: |
       if [ -z "$$variant" ]; then
-        VARIANT=prod
+        VARIANT=default
       else
         VARIANT=$$variant
       fi

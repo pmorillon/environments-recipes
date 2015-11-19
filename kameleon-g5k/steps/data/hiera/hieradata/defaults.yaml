@@ -1,6 +1,6 @@
 ---
-env::prod::misc::rootpwd: ""
-env::prod::oar::ssh:
+env::default::misc::rootpwd: ""
+env::default::oar::ssh:
   grenoble:
     oarnodesetting_ssh_key: ""
     oarnodesetting_ssh_key_pub: ""

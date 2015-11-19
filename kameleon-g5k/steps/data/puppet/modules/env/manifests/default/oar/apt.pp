@@ -1,4 +1,4 @@
-class env::prod::oar::apt {
+class env::default::oar::apt {
 
   file {
     '/etc/apt/sources.list.d/oar.list':
