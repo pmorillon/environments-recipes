@@ -7,4 +7,5 @@
 :json:
   :datadir: /tmp/hiera/hieradata
 :hierarchy:
+  - common
   - defaults

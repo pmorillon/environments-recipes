@@ -22,8 +22,6 @@
   - exec_in: apt-mark auto puppet-agent lsb-release puppetlabs-release-pc1
   # We also install stdlib module that contains some usefull functions
   - exec_in: apt-get install -y ca-certificates ; $$puppet_path/puppet module install puppetlabs-stdlib
-  # Glitch that make hiera uses 'common' if available (contains real admin values), or 'default' value (empty string most of the time) if built by users.
-  - exec_in: if [[ -f /tmp/hiera/hieradata/common.yaml ]]; then sed 's/defaults/common/' -i /tmp/hiera/hiera.yaml; fi
   - on_setup_clean:
     - exec_in: $$puppet_path/puppet module uninstall puppetlabs-stdlib
     - exec_in: apt-get --yes autoremove --purge | tee /tmp/temp_purge
