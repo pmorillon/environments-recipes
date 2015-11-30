@@ -46,7 +46,7 @@
 - run_puppet:
   - exec_in: |
       if [ -z "$$variant" ]; then
-        VARIANT=default
+        VARIANT=std
       else
         VARIANT=$$variant
       fi

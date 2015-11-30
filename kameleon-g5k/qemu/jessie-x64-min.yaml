@@ -11,7 +11,7 @@ extend: ../../kameleon/qemu/debian8.yaml
 checkpoint: qemu.yaml
 #== Global variables use by Kameleon engine and the steps
 global:
-  variant: min # default walue for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
+  variant: min # default value for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
   qemu_image_size: 15G
   input: $$qemu_image_disk
   bootstrap_packages: >

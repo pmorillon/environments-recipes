@@ -11,7 +11,7 @@ extend: ../../kameleon/virtualbox/debian8.yaml
 checkpoint: virtualbox.yaml
 #== Global variables use by Kameleon engine and the steps
 global:
-  variant: min # default walue for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
+  variant: min # default value for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
   virtualbox_image_size: 15000  ## megabytes
   input: $$virtualbox_image_disk
   bootstrap_packages: >

@@ -1,4 +1,4 @@
-class env::default::g5kchecks {
+class env::std::g5kchecks {
 
   $g5kchecks_deps = [ 'ruby-rspec', 'ruby-rest-client', 'ohai', 'ruby-popen4', 'fio', 'rake', 'ruby-json' ]
   case $operatingsystem {

@@ -1,4 +1,4 @@
-class env::default::g5kcode {
+class env::std::g5kcode {
 
   file {
     '/root/.ssh':

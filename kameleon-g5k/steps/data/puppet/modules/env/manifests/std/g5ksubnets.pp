@@ -1,4 +1,4 @@
-class env::default::g5ksubnets {
+class env::std::g5ksubnets {
 
   exec {
     "retrieve_g5ksubnets":

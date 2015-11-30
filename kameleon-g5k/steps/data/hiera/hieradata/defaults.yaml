@@ -1,6 +1,6 @@
 ---
-env::default::misc::rootpwd: ""
-env::default::oar::ssh:
+env::std::misc::rootpwd: ""
+env::std::oar::ssh:
   oarnodesetting_ssh_key: ""
   oarnodesetting_ssh_key_pub: ""
   id_rsa: ""
