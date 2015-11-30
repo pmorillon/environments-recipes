@@ -1,37 +1,3 @@
-# Define to allow an array call with unknown number of argument.
-define my_sshkey_file {
-  $key_list   = hiera("env::default::oar::ssh")
-  $key_values = $key_list["${name}"]
-
-  file {
-    "/var/lib/oar/.ssh/oarnodesetting_ssh_${name}.key":
-      ensure   => file,
-      owner    => oar,
-      group    => oar,
-      mode     => '0600',
-      content  => $key_values['oarnodesetting_ssh_key'];
-    "/var/lib/oar/.ssh/oarnodesetting_ssh_${name}.key.pub":
-      ensure   => file,
-      owner    => oar,
-      group    => oar,
-      mode     => '0644',
-      content  => $key_values['oarnodesetting_ssh_key_pub'];
-    "/var/lib/oar/.ssh/id_rsa_${name}":
-      ensure   => file,
-      owner    => oar,
-      group    => oar,
-      mode     => '0600',
-      content  => $key_values['id_rsa'];
-    "/var/lib/oar/.ssh/id_rsa_${name}.pub":
-      ensure   => file,
-      owner    => oar,
-      group    => oar,
-      mode     => '0644',
-      content  => $key_values['id_rsa_pub'];
-  }
-}
-
-
 class env::default::oar {
 
   # Setup oar repos
@@ -119,28 +85,42 @@ class env::default::oar {
       mode     => '0644',
       source   => 'puppet:///modules/env/default/oar/oar_authorized_keys',
       require  => Package[$oar_packages];
+    '/etc/default/oar-node':
+      ensure   => present,
+      owner    => root,
+      group    => root,
+      mode     => '0644',
+      source   => 'puppet:///modules/env/default/oar/default_oar-node';
   }
 
-  if $target_g5k {
+  if $env::target_g5k {
+    $key_values   = hiera("env::default::oar::ssh")
+
     file {
-      '/etc/default/oar-node':
-        ensure   => present,
-        owner    => root,
-        group    => root,
+      "/var/lib/oar/.ssh/oarnodesetting_ssh.key":
+        ensure   => file,
+        owner    => oar,
+        group    => oar,
+        mode     => '0600',
+        content  => $key_values['oarnodesetting_ssh_key'];
+      "/var/lib/oar/.ssh/oarnodesetting_ssh.key.pub":
+        ensure   => file,
+        owner    => oar,
+        group    => oar,
         mode     => '0644',
-        source   => 'puppet:///modules/env/default/oar/default_oar-node';
-    }
-  } else {
-    # List all file with a stored oarnodesetting key in hiera
-    $oarnodesetting_ssh = keys( hiera("env::default::oar::ssh") )
-    file {
-      '/etc/default/oar-node':
-        ensure   => present,
-        owner    => root,
-        group    => root,
+        content  => $key_values['oarnodesetting_ssh_key_pub'];
+      "/var/lib/oar/.ssh/id_rsa":
+        ensure   => file,
+        owner    => oar,
+        group    => oar,
+        mode     => '0600',
+        content  => $key_values['id_rsa'];
+      "/var/lib/oar/.ssh/id_rsa.pub":
+        ensure   => file,
+        owner    => oar,
+        group    => oar,
         mode     => '0644',
-        source   => 'puppet:///modules/env/default/oar/default_oar-node_site';
+        content  => $key_values['id_rsa_pub'];
     }
-    my_sshkey_file { $oarnodesetting_ssh: }
   }
 }
