@@ -32,5 +32,7 @@ class env::std ( $parent_parameters = {} ){
   class { 'env::std::g5kcode': }
   # g5k-subnets
   class { 'env::std::g5ksubnets': }
+  # Log net access
+  class { 'env::std::net_access': }
 
 }
