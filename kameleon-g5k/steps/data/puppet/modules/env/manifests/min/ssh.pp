@@ -34,7 +34,7 @@ class env::min::ssh {
         'rm /files/etc/ssh/sshd_config/HostKey[4]',
         'set /files/etc/ssh/sshd_config/UsePrivilegeSeparation no',
         'set /files/etc/ssh/sshd_config/ServerKeyBits 768',
-        'set /files/etc/ssh/sshd_config/PermitRootLogin yes',
+        'set /files/etc/ssh/sshd_config/PermitRootLogin without-password',
         'set /files/etc/ssh/sshd_config/PermitUserEnvironment yes'
       ],
       require  => Package['ssh server'];
