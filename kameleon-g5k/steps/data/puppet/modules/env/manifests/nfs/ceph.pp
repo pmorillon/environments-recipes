@@ -1,17 +1,13 @@
 class env::nfs::ceph (
-  $version = 'firefly'
+  $version = 'hammer'
 ) {
 
   $ceph_packages = [ 'ceph', 'ceph-fs-common', 'ceph-fuse', 'ceph-mds' ]
-  # Ok, this needs an explonation. Ceph doesn't include 'jessie' repostitories. If I add wheezy rep, we have some conflict.
-  # But jessie provide ceph and most of it's dep, with dependancies that are NOT the same than the one on ceph rep. So jessie version can be installed.
-  # Still, to have dfs5k to works, we need 'ceph-deploy' that is NOT on jessie rep, but does only require standard packages (python).
-  # We therefore (for jessie) install ceph from official repo and ceph-deploy from ceph repo (wheezy). Yes, this is dirty as hell. Let's call this "The dirty ceph patch"
-  # TODO: Clean this mess: make everything be installed from ceph repo, once ceph published a jessie version of their repo.
-  $ceph_packages_ceph_repository = [ 'ceph-deploy' ]
+  $ceph_packages_g5k_repository = [ 'ceph-deploy' ] # Ceph deploy is not distributed on ceph repo for jessie. So we picked wheezy package that works on jessie and distribute it.
+  $ceph_packages_g5k_repository_dep = [ 'python-setuptools' ]
   case $operatingsystem {
     'Debian': {
-      # Add ceph repositories: Won't be applied before ceph is installed. cf "The dirty ceph patch" exlonation.
+      # Add ceph repositories.
       class {
         'env::nfs::ceph::apt':
           version => $version;
@@ -21,11 +17,27 @@ class env::nfs::ceph (
       package {
         $ceph_packages :
           ensure   => installed,
-          before   => Class['env::nfs::ceph::apt']; # Cf "The dirty ceph patch" explonation
-        $ceph_packages_ceph_repository :
-          ensure   => installed,
           require  => [Class['env::nfs::ceph::apt'], Exec['/usr/bin/apt-get update']];
       }
+
+      # Ceph-deploy is used by dfsg5k to setup easily a ceph fs on g5k nodes.
+      # Retrieve ceph-deploy: not availaible on ceph repositories atm.
+      exec {
+        "retrieve_ceph-deploy":
+          command  => "/usr/bin/wget --no-check-certificate -q https://www.grid5000.fr/packages/debian/ceph-deploy_all.deb -O /tmp/ceph-deploy_all.deb",
+          creates  => "/tmp/g5kchecks_all.deb";
+      }
+      # Install ceph-deploy from deb retrieved on g5k.
+      package {
+        "ceph-deploy":
+          ensure   => installed,
+          provider => dpkg,
+          source   => "/tmp/ceph-deploy_all.deb",
+          require  => [Exec["retrieve_ceph-deploy"], Package[$ceph_packages_g5k_repository_dep] ] ;
+        $ceph_packages_g5k_repository_dep:
+          ensure   => installed;
+      }
+
 
       # Ensure service does not start at boot
       service {
