@@ -70,8 +70,8 @@
           _QEMU_PID=$(cat $$qemu_pidfile)
           if [ -S $$qemu_monitor_socket ]; then
             NEXT_WAIT_TIME=0
-            echo system_powerdown | socat - UNIX-CONNECT:$$qemu_monitor_socket
-            while ps -p $_QEMU_PID > /dev/null && [ $NEXT_WAIT_TIME -lt $$shutdown_timeout ];
+            echo system_powerdown | socat - UNIX-CONNECT:$$qemu_monitor_socket && rc=$? || rc=$?
+            while ps -p $_QEMU_PID > /dev/null && [ $NEXT_WAIT_TIME -lt $$shutdown_timeout ] && [ "$rc" = "0" ] ;
             do
               sleep 1
               echo -en "\rWaiting for qemu virtual machine to shutdown...($(( $$shutdown_timeout - 1 - NEXT_WAIT_TIME++ ))s)"
