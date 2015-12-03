@@ -1,13 +1,29 @@
 class env::std::oar {
 
-  # Setup oar repos
-  include 'env::std::oar::apt'
 
   $oar_packages = ['oar-common', 'oar-node']
-  package {
-    ['oar-common', 'oar-node']:
-      ensure   => installed;
+  # Installed oar packages from g5k 'mirror'.
+  exec {
+    "retrieve_oar-common":
+      command  => "/usr/bin/wget --no-check-certificate -q https://www.grid5000.fr/packages/debian/oar-common_2.5.6~rc3-1~bpo70+1_amd64.deb -O /tmp/oar-common_2.5.6~rc3-1~bpo70+1_amd64.deb",
+      creates  => "/tmp/oar-common_2.5.6~rc3-1~bpo70+1_amd64.deb";
+    "retrieve_oar-node":
+      command  => "/usr/bin/wget --no-check-certificate -q https://www.grid5000.fr/packages/debian/oar-node_2.5.6~rc3-1~bpo70+1_amd64.deb -O /tmp/oar-node_2.5.6~rc3-1~bpo70+1_amd64.deb",
+      creates  => "/tmp/oar-node_2.5.6~rc3-1~bpo70+1_amd64.deb";
   }
+  package {
+    "oar-common":
+      ensure   => installed,
+      provider => dpkg,
+      source   => "/tmp/oar-common_2.5.6~rc3-1~bpo70+1_amd64.deb",
+      require  => Exec["retrieve_oar-common"];
+    "oar-node":
+      ensure   => installed,
+      provider => dpkg,
+      source   => "/tmp/oar-node_2.5.6~rc3-1~bpo70+1_amd64.deb",
+      require  => Exec["retrieve_oar-node"];
+  }
+
 
   file {
     '/var/lib/oar/checklogs/':
