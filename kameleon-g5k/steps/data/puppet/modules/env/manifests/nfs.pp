@@ -25,5 +25,6 @@ class env::nfs ( $parent_parameters = {} ){
   class { 'env::nfs::ldap': }
   # nfs
   class { 'env::nfs::nfs': }
-
+  # storage5k required
+  class { 'env::nfs::storage5k': }
 }

@@ -11,8 +11,8 @@ class env::std::net_access {
       owner   => root,
       group   => root,
       source  => "puppet:///modules/env/std/net_access/rsyslog.conf";
-    # iptables installed by kameleon. We then consider /etc/iptables already exists and iptables is installed.
-    "/etc/iptables/rules.v4":
+    # iptables installed by kameleon.
+    "/etc/network/if-pre-up.d/iptables":
       mode    => '0600',
       owner   => root,
       group   => root,
