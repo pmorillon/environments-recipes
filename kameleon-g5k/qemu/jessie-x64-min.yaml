@@ -2,51 +2,21 @@
 # vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
 #==============================================================================
 #
-# DESCRIPTION: Debian 8 (Jessie) base system built with virtualbox.
+# DESCRIPTION: Debian 8 (Jessie) min built with qemu.
 #
 #==============================================================================
 ---
-extend: ../../kameleon/qemu/debian8.yaml
-# Enables qcow2 checkpoint
-checkpoint: qemu.yaml
-#== Global variables use by Kameleon engine and the steps
+extend: jessie-x64-global.yaml # Cf 'jessie-x64-global' for a real content. This recipe only overwrite variant.
 global:
-  variant: min # default value for variant. Can be overwritten by --global=variant:<my_variant> when calling kameleon
-  qemu_image_size: 15G
-  input: $$qemu_image_disk
-  bootstrap_packages: >
-    linux-image-$$kernel_arch
-    isc-dhcp-client isc-dhcp-common ifupdown iptables iproute2 iputils-ping
-    openssh-server
-  setup_packages: >
-    extlinux
-  os_family: debian
-  os_release: jessie
-  image_version: 2015120317
-  output: "$$kameleon_cwd/$${kameleon_recipe_name}" # output files basename
-  g5k_tgz_path: server:///grid5000/images/$${os_release}-x64-$${variant}.tgz
+  variant: min
   g5k_postinst_path: server:///grid5000/postinstalls/debian-x64-min-1.2-post.tgz
+
 
 bootstrap:
   - "@base"
 
 setup:
-   # Install
-  - configure_apt:
-    - repository: $$apt_repository
-    - enable_contrib_repo: $$apt_enable_contrib
-    - enable_nonfree_repo: $$apt_enable_nonfree
-  - upgrade_system:
-    - dist_upgrade: true
-  - install_software:
-    - packages: $$setup_packages
-  - install_bootloader
-  - setup_orchestrator
-  - run_orchestrator
+  - "@base"
 
 export:
-  - disable_checkpoint
-  - qemu_save_appliance:
-    - output: $$output
-    - save_as_qcow2
-  - export_g5k
+  - "@base"
