@@ -13,10 +13,10 @@ class env::std::net_access {
       source  => "puppet:///modules/env/std/net_access/rsyslog.conf";
     # iptables installed by kameleon.
     "/etc/network/if-pre-up.d/iptables":
-      mode    => '0600',
+      mode    => '0755',
       owner   => root,
       group   => root,
-      source  => "puppet:///modules/env/std/net_access/rules.v4"
+      source  => "puppet:///modules/env/std/net_access/iptables"
   }
 }
 
