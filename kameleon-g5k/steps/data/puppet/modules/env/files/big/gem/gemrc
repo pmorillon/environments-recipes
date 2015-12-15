@@ -1,5 +1,5 @@
 ---
-gem: --http-proxy http://proxy:3128 --no-rdoc --no-ri
+gem: --no-rdoc --no-ri
 :benchmark: false
 :backtrace: false
 :update_sources: true
