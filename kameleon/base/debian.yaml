@@ -62,7 +62,7 @@ setup:
     - dist_upgrade: true
   - install_software:
     - packages: >
-        debian-keyring $$setup_packages
+        debian-archive-keyring $$setup_packages
   - configure_kernel
   - install_bootloader
   # Configuration
