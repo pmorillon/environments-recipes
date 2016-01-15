@@ -17,6 +17,15 @@ class env::std::g5kchecks {
         $g5kchecks_deps:
           ensure   => installed;
       }
+      file {
+        '/etc/g5k-checks.conf':
+          ensure   => present,
+          owner    => root,
+          group    => root,
+          mode     => '0644',
+          source   => 'puppet:///modules/env/std/g5kchecks/g5k-checks.conf',
+          require  => Package["g5kchecks"];
+      }
     }
     default: {
       err "${operatingsystem} not suported."
