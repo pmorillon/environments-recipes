@@ -770,6 +770,10 @@ bring_up()
                 fi
                     # /sbin/ifup ${i} > /dev/null 2>&1
                 ;;
+                Debian)
+                    . ${NETWORK_CONF_DIR}/ifcfg-${i}
+                    /sbin/ifconfig ${i} ${IPADDR} netmask ${NETMASK} > /dev/null 2>&1
+                ;;
                 *)
                     /sbin/ifup ${i}
                 ;;

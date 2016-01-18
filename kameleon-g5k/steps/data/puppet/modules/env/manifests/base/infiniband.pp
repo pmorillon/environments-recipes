@@ -14,7 +14,7 @@ class env::base::infiniband (){
       ensure   => file,
       owner    => root,
       group    => root,
-      mode     => '0755',
+      mode     => '0644',
       source   => 'puppet:///modules/env/base/infiniband/openib.conf',
       require  => Package[$infiniband_packages];
     '/etc/init.d/openibd':
@@ -24,12 +24,12 @@ class env::base::infiniband (){
       mode     => '0755',
       source   => 'puppet:///modules/env/base/infiniband/openibd',
       require  => Package[$infiniband_packages];
-    '/etc/network/if-up.d/ip_over_ib':
+    '/etc/infiniband/ifcfg-ib0':
       ensure   => file,
       owner    => root,
       group    => root,
-      mode     => '0755',
-      content  => template('env/base/infiniband/ip_over_ib.erb'),
+      mode     => '0644',
+      source   => 'puppet:///modules/env/base/infiniband/ifcfg-ib0',
       require  => Package[$infiniband_packages];
    '/lib/udev/rules.d/90-ib.rules':
       ensure  => present,
@@ -42,7 +42,7 @@ class env::base::infiniband (){
 
   service {
     'openibd':
-      enable   => false,
+      enable   => true,
       require  => [
                Package[$infiniband_packages],
                File['/etc/init.d/openibd']
