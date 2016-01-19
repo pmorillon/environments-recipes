@@ -13,6 +13,7 @@ class env::base::mx ($architecture = 'amd64') {
           source     => "/tmp/mx_1.2.16-g5k_${architecture}.deb",
           require    =>  [
               Exec['retrieve_mx_deb'],
+              File['/usr/lib64'],
               Package['syslinux']  # already defined in env::base::infiniband
             ];
       }
@@ -42,7 +43,12 @@ class env::base::mx ($architecture = 'amd64') {
       group      => root,
       mode       => '0755',
       source     => 'puppet:///modules/env/base/mx/ip_over_mx',
-      require    => Exec['mx_local_install']
+      require    => Exec['mx_local_install'];
+    '/usr/lib64':
+      ensure  => link,
+      owner   => root,
+      group   => root,
+      target  => '/usr/lib';
   }
 
   # Add mx support for openmpi
