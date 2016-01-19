@@ -12,8 +12,8 @@ class env::big::packages () {
   $python_dev = [ 'python-dev', 'python-imaging', 'python-matplotlib-data', 'python-matplotlib-doc', 'python-mysqldb', 'python-numpy', 'python-paramiko', 'python-scipy', 'python-sqlite', 'python-httplib2', 'python-yaml', 'python-psycopg2', 'python-pip']
   $java_dev = [ 'openjdk-7-jdk', 'openjdk-7-jre', 'ant' ]
   case $operatingsystem {
-      'centos':           { $dev = [ $general_dev, $perl_dev, $python_dev, $java_dev, 'gcc', 'ruby-libs', 'ruby-devel', 'ruby-docs', 'ruby-ri', 'ruby-irb', 'ruby-rdoc', 'ruby-mode', 'libwww-perl', 'libperl-dev' ]}
-      /^(Debian|Ubuntu)$/:{ $dev = [ $general_dev, $perl_dev, $python_dev, $java_dev, 'build-essential', 'binutils-doc', 'ruby-dev', 'ri', 'libruby', 'manpages-dev' ]  }
+      'centos':           { $dev = [ $general_dev, $perl_dev, $python_dev, $java_dev, 'gcc', 'ruby-libs', 'ruby-devel', 'ruby-docs', 'ruby-rack', 'ruby-ri', 'ruby-irb', 'ruby-rdoc', 'ruby-mode', 'libwww-perl', 'libperl-dev' ]}
+      /^(Debian|Ubuntu)$/:{ $dev = [ $general_dev, $perl_dev, $python_dev, $java_dev, 'build-essential', 'binutils-doc', 'ruby-dev', 'ruby-rack', 'ri', 'libruby', 'manpages-dev' ]  }
       default:            { $dev = [ $general_dev, $perl_dev, $python_dev, $java_dev ]}
     }
   $gems = [ 'mime-types', 'rdoc', 'rest-client', 'restfully']
@@ -49,6 +49,6 @@ class env::big::packages () {
     $gems:
       ensure   => installed,
       provider => gem,
-      require  => Package['rake_gem'];
+      require  => [Package['rake_gem'], Package['ruby-rack']];
   }
 }
