@@ -36,6 +36,12 @@ class env::big::kvm () {
       mode      => '0755',
       source    => 'puppet:///modules/env/big/kvm/random_mac';
   }
+
+  service {
+    'uml-utilities':
+      provider  => systemd,
+      enable    => false;
+  }
   # Not sure this is required anymore. Try without, uncomment if needed
   # augeas {
   #   'set_XDG_RUNTIME_DIR':
