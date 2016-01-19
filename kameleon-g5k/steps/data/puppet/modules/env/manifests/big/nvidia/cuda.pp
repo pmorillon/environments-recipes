@@ -27,14 +27,14 @@ class env::big::nvidia::cuda () {
       owner     => root,
       group     => root,
       mode      => '0644',
-      content   => 'puppet:///modules/env/big/nvidia/cuda.conf',
+      source    => 'puppet:///modules/env/big/nvidia/cuda.conf',
       notify    => Exec['update_ld_conf'];
     '/etc/profile':
       ensure    => file,
       owner      => root,
       group     => root,
       mode      => '0755',
-      source   => 'puppet:///modules/env/big/nvidia/profile';
+      source    => 'puppet:///modules/env/big/nvidia/profile';
     '/usr/local/cuda-7.0/lib64/libcuda.so':
       ensure    => 'link',
       target    => '/usr/lib/libcuda.so';
