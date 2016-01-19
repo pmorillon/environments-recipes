@@ -28,7 +28,9 @@ class env::big::mic ($enable = false) {
 
       $installed_packages = [ 'mpss-micmgmt', 'mpss-miccheck', 'mpss-coi', 'mpss-mpm', 'mpss-miccheck-bin', 'glibc2.12.2pkg-libsettings0', 'glibc2.12.2pkg-libmicmgmt0', 'libscif0', 'mpss-daemon', 'mpss-boot-files', 'mpss-sdk-k1om', 'intel-composerxe-compat-k1om' ]
 
-      my_package { $installed_packages: }
+      my_package { $installed_packages:
+        require  => File['/usr/lib64'];
+      }
     }
     default: {
       err "${operatingsystem} not suported."
@@ -114,6 +116,17 @@ class env::big::mic ($enable = false) {
       owner   => root,
       group   => root,
       source  => "puppet:///modules/env/big/mic/fstab";
+    '/sbin/lspci':
+      ensure  => link,
+      owner   => root,
+      group   => root,
+      target  => '/usr/bin/lspci';
+    '/etc/udev/rules.d/85-mic.rules':
+      ensure  => file,
+      mode    => '0644',
+      owner   => root,
+      group   => root,
+      source  => "puppet:///modules/env/big/mic/85-mic.rules";
   }
 
   service {
