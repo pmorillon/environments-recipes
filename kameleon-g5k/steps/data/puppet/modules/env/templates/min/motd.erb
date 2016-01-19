@@ -26,9 +26,10 @@ Misc
   * SSH has X11 forwarding enabled
   * Max open files: 65536
     <% else -%>
-
+<%#
   Grid'5000 tune of network buffer sizes, file descriptors, sshd MaxStartups and TCP cubic:
   wget -O - http://git.grid5000.fr/g5k-tunings/tune.sh | bash
+%>
     <% end -%>
 
 More details: https://www.grid5000.fr/mediawiki/index.php/<%= @lsbdistcodename %>-x64-<%= scope.lookupvar('env::variant') %>-<%= scope.lookupvar('env::version') %>
