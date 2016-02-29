@@ -3,3 +3,5 @@ Host *
     StrictHostKeyChecking no
     PasswordAuthentication no
     AddressFamily inet
+    UserKnownHostsFile /dev/null
+    LogLevel quiet
