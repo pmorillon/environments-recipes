@@ -1,0 +1,46 @@
+#==============================================================================
+# vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
+#==============================================================================
+#
+# DESCRIPTION: Ubuntu 16.04 LTS base system built with chroot.
+#
+#==============================================================================
+---
+extend: ubuntu14.04.yaml
+
+# Global variables use by Kameleon engine and the steps
+global:
+  # Distribution
+  release: xenial
+  release_number: 16.04
+  bootstrap_script: $${kameleon_data_dir}/debootstrap.sh
+  #  bootstrap_image_version: "20161116-1"
+
+  # Apt recipe options
+  apt_repository: http://archive.ubuntu.com/ubuntu/
+  apt_enable_restricted: true
+
+  setup_packages: >-
+    bash-completion curl nano vim language-pack-en sudo
+
+# Bootstrap the new system and create the 'in_context'
+#bootstrap:
+#  - "@base"
+
+bootstrap:
+  - enable_checkpoint
+  - download_iso
+  - prepare_disk
+  - download_kameleon_helpers
+  - start_qemu
+  - install_build_packages
+  - debootstrap
+  - start_chroot
+
+# Install and configuration steps
+setup:
+  - "@base"
+
+# Export the generated appliance in the format of your choice
+export:
+  - "@base"
